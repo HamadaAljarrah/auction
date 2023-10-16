@@ -16,6 +16,8 @@ namespace DistLab2.Core
         }
         public void CreateAuction(int auctionId, string name, DateTime endDate, string description)
         {
+            Console.WriteLine("in creat auction" + name);
+
             Auction auction = new Auction(auctionId, name, endDate, description);
             AuctionDb auctionDb = _mapper.Map<AuctionDb>(auction);
 
