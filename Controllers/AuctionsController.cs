@@ -16,20 +16,20 @@ namespace DistLab2.Controllers
 
 
         // GET: AuctionsController
-        public ActionResult Index()
-        {
-            Console.WriteLine("hello from Aucton controller");
-            //List<Auction> auctions = _auctionService.GetAll();
-            //return View(auctions);
+        //public ActionResult Index()
+        //{
+        //    Console.WriteLine("hello from Aucton controller");
+        //    //List<Auction> auctions = _auctionService.GetAll();
+        //    //return View(auctions);
 
-            List<Auction> auctions = _auctionService.GetAll();
-            List<AuctionVM> auctionVMs = new();
-            foreach (var auction in auctions)
-            {
-                auctionVMs.Add(AuctionVM.FromAuction(auction));
-            }
-            return View(auctionVMs);
-        }
+        //    List<Auction> auctions = _auctionService.GetAll();
+        //    List<AuctionVM> auctionVMs = new();
+        //    foreach (var auction in auctions)
+        //    {
+        //        auctionVMs.Add(AuctionVM.FromAuction(auction));
+        //    }
+        //    return View(auctionVMs);
+        //}
 
         // GET: AuctionsController/Details/5
         //public ActionResult Details(int id)

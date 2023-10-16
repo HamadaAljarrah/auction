@@ -15,7 +15,7 @@ namespace DistLab2.ViewModels
             {
                 AuctionId = auction.AuctionId,
                 Name = auction.Name,
-                CreatedDate = auction.CreatedDate,
+                CreatedDate = auction.EndDate,
                 StartingPrice = auction.StartingPrice,
             };
         }
