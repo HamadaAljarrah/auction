@@ -29,9 +29,10 @@ namespace Controllers
 
         // POST: AuctionsController/Create
         [HttpPost]
-        public ActionResult Create(int autctionId, string name, DateTime endTime, string description)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(int auctionId, string name, DateTime endTime, string description)
         {
-            _auctionService.CreateAuction(autctionId, name, endTime, description);
+            _auctionService.CreateAuction(1, name, endTime, description);
             return View();
         }
 
