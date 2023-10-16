@@ -5,8 +5,7 @@
 <section class="h-full pt-8">
   <div class="w-[500px] rounded-3xl bg-white m-auto  p-8">
     <h1 class="mb-8 text-center text-3xl font-bold">Create Auction</h1>
-    <form method="post" action="/Auctions/Create">
-      @Html.AntiForgeryToken()
+    <form asp-controller="Auction" asp-action="Create" method="post" >
       <div class="flex flex-col gap-4">
 
         <input name="name" placeholder=" Title"
@@ -16,7 +15,7 @@
           class="w-full resize-none rounded-xl bg-slate-50 p-3 px-4 placeholder:font-light focus:outline-black"
           type="text"></textarea>
 
-        <input name="endTime" placeholder="Ending Date"
+        <input name="endDate" placeholder="Ending Date"
           class="w-full rounded-xl bg-slate-50 p-3 px-4 text-black/30 placeholder:font-light focus:outline-black"
           type="date" />
 
