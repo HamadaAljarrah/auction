@@ -1,3 +1,4 @@
+@model IEnumerable<DistLab2.ViewModels.AuctionVM>
 @{
     ViewData["Title"] = "Create auction";
 }
@@ -6,7 +7,7 @@
 
     <h1 class="my-3 text-3xl font-bold">My Auctions</h1>
 
-
+@foreach (var item in Model) {
     <div class="m-auto max-h-[260-px] rounded-3xl bg-white p-6">
         <div class="flex items-center justify-between gap-5">
             <img src="https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcQ-FvbbAq5IaJUhtwxXEwY0D-jiZju02ejnNHx_bQWL_27GF3srhwJgqusMAqKh3QqU"
@@ -15,21 +16,12 @@
             <div class="flex flex-col justify-between place-self-stretch">
                 <div>
                     <div class="flex items-end gap-2">
-                        <h1 class="text-3xl font-bold">Monalisa</h1>
-                        <span class="rounded-xl bg-green-200 px-3 py-1 text-[12px]">14 bids</span>
+                        <h1 class="text-3xl font-bold">@item.Name</h1>
+                        <span class="rounded-xl bg-green-200 px-3 py-1 text-[12px]">@item.Bids.Count</span>
                     </div>
                 </div>
                 <div class="overflow-y-auto max-h-[140px]">
-                    <p class="leading-[150%]">Painting, the expression of ideas and emotions, with the creation of
-                        certain aesthetic qualities, in a two-dimensional visual language. The elements of this
-                        language, its shapes, lines, colours, tones, and texture are used in various ways to produce
-                        sensations of volume, space, movement, and light on
-                        ting, the expression of ideas and emotions, with the creation of
-                        certain aesthetic qualities, in a two-dimensional visual language. The elements of this
-                        language, its shapes
-                        ting, the expression of ideas and emotions, with the creation of
-                        certain aesthetic qualities, in a two-dimensional visual language. The elements of this
-                        language, its shapes</p>
+                    <p class="leading-[150%]">@item.Description</p>
                 </div>
 
             </div>
@@ -58,5 +50,5 @@
             </div>
         </div>
     </div>
-
+}
 </section>
