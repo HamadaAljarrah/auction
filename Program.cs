@@ -10,8 +10,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAuctionService, MockAuctionService>();
 //db med dependency injection
 builder.Services.AddDbContext<AuctionDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("AuctionDbConnection")));
-
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AuctionDbConnection")));
+//builder.Services.AddDbContext<AuctionDbContext>(options =>
+//    options.UseSqlite(builder.Configuration.GetConnectionString("AuctionDbConnection")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
