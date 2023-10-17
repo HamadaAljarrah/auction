@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Controllers
+namespace DistLab2.Controllers
 {
     public class AuthController : Controller
     {

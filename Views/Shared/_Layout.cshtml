@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,24 +10,26 @@
     <link rel="stylesheet" href="~/DistLab2.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
 </head>
+
 <body class="overflow-y-auto flex flex-col justify-between bg-slate-50">
     <header>
-        <nav class="shadow-md py-3 bg-white">
+        <nav class="py-3 bg-white shadow-sm">
             <div class="container">
-                <div class="flex justify-between">
-                    <h1>Logo</h1>
-                    
-                    <div>
-                        <a href="/auction/create">Create</a>
-                        <a href="/auctions">Auction</a>
-
+                <div class="flex items-center justify-between">
+                    <a class="flex items-end justify-center gap-1" href="/">
+                        <h1 class="font-bold text-xl">Logo</h1>
+                        <span class="w-2 h-2 rounded-full bg-red-600"></span>
+                    </a>
+                    <div class="flex gap-4">
+                        <a href="/auction" class="">Market</a>
+                        <a href="/auction/create" class="">My Auctions</a>
                     </div>
-
-                    <div>
-                        <a href="/auth/login">Login</a>
-                        <a href="/auth/register">Register</a>
+                    <div class="flex items-center gap-4">
+                        <a href="/auth/login" class="">Login</a>
+                        <a href="/auth/register" class="rounded-lg bg-black/90 px-4 py-2 text-white transition-all hover:bg-black/80">Sign up</a>
                     </div>
                 </div>
+
             </div>
         </nav>
     </header>
@@ -48,4 +51,5 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

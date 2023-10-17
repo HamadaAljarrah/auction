@@ -1,11 +1,9 @@
-using DistLab2.Controllers;
-using DistLab2.Core;
 using DistLab2.Core.Interfaces;
 using DistLab2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 
-namespace Controllers
+namespace DistLab2.Controllers
 {
     public class AuctionController : Controller
     {
@@ -20,8 +18,34 @@ namespace Controllers
         // GET: AuctionsController
         public IActionResult Index()
         {
-            return View();
+            List<AuctionVM> data = new()
+            {
+                new AuctionVM
+                {
+                    Name = "Monalisa",
+                    Description = "Painting, the expression of ideas and emotions, with the creation of certain aesthetic qualities, in a two-dimensional visual language. The elements of this language, its shapes, lines, colours, tones, and texture are used in various ways to produce sensations of volume, space, movement, and light on",
+                    CreatedDate = DateTime.Now,
+                    StartingPrice = 300,
+                    Bids = new()
+                },
+                 new AuctionVM
+                {
+                    Name = "Aftica",
+                    Description = "Painting, the expression of ideas and emotions, with the creation of certain aesthetic qualities, in a two-dimensional visual language. The elements of this language, its shapes, lines, colours, tones, and texture are used in various ways to produce sensations of volume, space, movement, and light on",
+                    CreatedDate = DateTime.Now,
+                    StartingPrice = 500,
+                    Bids = new()
+                },
+            };
 
+            return View(data);
+
+        }
+
+        // GET: AuctionsController/Create
+        public ActionResult Create()
+        {
+            return View();
         }
 
         // POST: AuctionsController/Create

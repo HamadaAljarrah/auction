@@ -5,7 +5,11 @@ module.exports = {
     './Views/**/*.cshtml'
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        "black-s": "#333333"
+      }
+    },
   },
   plugins: [],
 }

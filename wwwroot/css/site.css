@@ -18,4 +18,9 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-color: #f4f4f4 !important;
+  color: #333333;
+}
+a{
+  color: #333333 !important;
 }
