@@ -56,13 +56,20 @@ namespace DistLab2.Controllers
             Console.WriteLine(formData["endDate"]);
 
             DateTime.TryParse(formData["endDate"], out DateTime endDate);
-      
+
             Console.WriteLine(formData["description"]);
             Console.WriteLine(formData["startPrice"]);
 
-             _auctionService.CreateAuction(1, formData["name"], endDate, formData["description"]);
+            _auctionService.CreateAuction(1, formData["name"], endDate, formData["description"]);
             return View();
         }
 
+
+
+        // GET: AuctionsController/Details
+        public ActionResult Details()
+        {
+            return View();
+        }
     }
 }

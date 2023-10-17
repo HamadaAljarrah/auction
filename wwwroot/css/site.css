@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 html {
   font-size: 14px;
 }
@@ -21,6 +22,28 @@ body {
   background-color: #f4f4f4 !important;
   color: #333333;
 }
-a{
+
+a {
   color: #333333 !important;
+}
+
+
+.grid-parent {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+}
+
+.grid-side {
+  grid-area: 1 / 1 / 7 / 3;
+}
+
+.grid-head {
+  grid-area: 1 / 3 / 3 / 6;
+}
+
+.grid-body {
+  grid-area: 3 / 3 / 7 / 6;
 }
