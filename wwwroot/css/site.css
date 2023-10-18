@@ -19,7 +19,6 @@ html {
 
 body {
   margin-bottom: 60px;
-  background-color: #f4f4f4 !important;
   color: #333333;
 }
 
@@ -38,12 +37,15 @@ a {
 
 .grid-side {
   grid-area: 1 / 1 / 7 / 3;
+  border: 0.5px solid #c7c7c7;
 }
 
 .grid-head {
   grid-area: 1 / 3 / 3 / 6;
+  border: 0.5px solid #c7c7c7;
 }
 
 .grid-body {
   grid-area: 3 / 3 / 7 / 6;
+  border: 0.5px solid #c7c7c7;
 }

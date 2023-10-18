@@ -7,7 +7,7 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                "black-s": "#333333"
+                "cus-slate": "#F8FBFD"
             },
             gridTemplateRows: {
                 '6': 'repeat(6, minmax(0, 1fr))',

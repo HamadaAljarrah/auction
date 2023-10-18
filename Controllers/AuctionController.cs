@@ -42,6 +42,34 @@ namespace DistLab2.Controllers
 
         }
 
+
+     // GET: AuctionsController/Auction/MyAuctions
+         public IActionResult MyAuctions()
+        {
+            List<AuctionVM> data = new()
+            {
+                new AuctionVM
+                {
+                    Name = "Monalisa",
+                    Description = "Painting, the expression of ideas and emotions, with the creation of certain aesthetic qualities, in a two-dimensional visual language. The elements of this language, its shapes, lines, colours, tones, and texture are used in various ways to produce sensations of volume, space, movement, and light on",
+                    CreatedDate = DateTime.Now,
+                    StartingPrice = 300,
+                    Bids = new()
+                },
+                 new AuctionVM
+                {
+                    Name = "Aftica",
+                    Description = "Painting, the expression of ideas and emotions, with the creation of certain aesthetic qualities, in a two-dimensional visual language. The elements of this language, its shapes, lines, colours, tones, and texture are used in various ways to produce sensations of volume, space, movement, and light on",
+                    CreatedDate = DateTime.Now,
+                    StartingPrice = 500,
+                    Bids = new()
+                },
+            };
+
+            return View(data);
+
+        }
+
         // GET: AuctionsController/Create
         public ActionResult Create()
         {
@@ -68,6 +96,12 @@ namespace DistLab2.Controllers
 
         // GET: AuctionsController/Details
         public ActionResult Details()
+        {
+            return View();
+        }
+
+          // GET: AuctionsController/Edit
+        public ActionResult Edit()
         {
             return View();
         }
