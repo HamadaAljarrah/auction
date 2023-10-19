@@ -4,22 +4,24 @@
   ViewData["Title"] = "Auction Details";
 }
 
+@{
+  TimeSpan timeLeft = Model.EndingDate - DateTime.Now;
+  decimal hieghestBid = Model.Bids.Count > 0 ? Model.Bids.Max(b => b.Amount) : 0;
+}
+
 <div class="py-4 h-[85vh]">
   <div class="grid-parent h-full">
     <div class="grid-side rounded-3xl bg-white p-8">
-      <img src="https://mynewart.se/wp-content/uploads/2016/06/Mona-Lisa.jpg" alt=""
-        class="mb-4 h-1/2 w-full rounded-xl object-cover object-top" />
-      <h1 class="text-3xl font-bold mb-2">Mona Lisa</h1>
-      <p>Painting, the expression of ideas and emotions, with the creation of certain aesthetic qualities, in a
-        two-dimensional visual language. The elements of this language, its shapes, lines, colours, tones, and texture
-        are used in various ways to produce sensations of volume, space, movement, and light on</p>
+      <img src="https://mynewart.se/wp-content/uploads/2016/06/Mona-Lisa.jpg" alt="" class="mb-4 h-1/2 w-full rounded-xl object-cover object-top" />
+      <h1 class="text-3xl font-bold mb-2">@Model.Name</h1>
+      <p>@Model.Description</p>
     </div>
     <div class="grid-head flex flex-col justify-between rounded-3xl bg-white p-8">
       <div class="flex items-start justify-between">
         <div class="flex items-start gap-3">
           <div>
             <h1 class="text-3xl font-bold">@Model.Name</h1>
-            <p class="text-sm text-black/50">hamada@gmail.com</p>
+            <p class="text-sm text-black/50">@Model.Username</p>
           </div>
           <span class="mt-2 rounded-xl bg-green-200 px-3 py-1 text-[12px]">@Model.Bids.Count Bids</span>
         </div>
@@ -36,11 +38,11 @@
         </div>
         <div>
           <p class="text-sm text-black/60">Highest Bid</p>
-          <h3 class="text-3xl font-bold">$1300</h3>
+          <h3 class="text-3xl font-bold">$@hieghestBid</h3>
         </div>
         <div>
           <p class="text-sm text-black/60">Time left</p>
-          <h3 class="text-3xl font-bold">@Model.EndingDate</h3>
+          <h3 class="text-3xl font-bold">@($"{timeLeft.Days}d:{timeLeft.Hours}h")</h3>
         </div>
 
       </div>
@@ -61,11 +63,11 @@
           }
         </div>
       </div>
-      <div class="flex gap-2 pt-3">
+      <form class="flex gap-2 pt-3">
         <input placeholder="Amount"
           class="flex-grow rounded-xl bg-cus-bg p-3 px-4 placeholder:font-light focus:outline-black" type="number" />
-        <button class="rounded-xl bg-black/90 px-4 py-2 text-white">Place bid</button>
-      </div>
+        <button type="submit" class="rounded-xl bg-black/90 px-4 py-2 text-white">Place bid</button>
+      </form>
     </div>
   </div>
 </div>

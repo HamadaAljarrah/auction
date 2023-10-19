@@ -17,20 +17,24 @@ namespace DistLab2.Controllers
             {
                 new AuctionVM
                 {
+                    Id = 0,
                     Name = "Monalisa",
                     Description = "Painting, the expression of ideas and emotions, with the creation of certain aesthetic qualities, in a two-dimensional visual language. The elements of this language, its shapes, lines, colours, tones, and texture are used in various ways to produce sensations of volume, space, movement, and light on",
                     CreatedDate = DateTime.Now,
                     StartingPrice = 300,
-                    EndingDate = DateTime.Now,
+                    Username = "hamada@gmail.com",
+                    EndingDate = new DateTime(2023, 12, 31, 23, 59, 59),
                     Bids = new()
                 },
                  new AuctionVM
                 {
+                    Id = 1,
                     Name = "Africa",
                     Description = "Painting, the expression of ideas and emotions, with the creation of certain aesthetic qualities, in a two-dimensional visual language. The elements of this language, its shapes, lines, colours, tones, and texture are used in various ways to produce sensations of volume, space, movement, and light on",
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = new DateTime(2023, 11, 29, 23, 59, 59),
+                    Username = "marcus@gmail.com",
                     StartingPrice = 500,
-                    Bids = new() 
+                    Bids = new()
                 },
             };
 
@@ -44,7 +48,7 @@ namespace DistLab2.Controllers
         // GET: AuctionsController
         public IActionResult Index()
         {
-            var auctions = _auctionService.GetAll();
+             var auctions = _auctionService.GetAll();
             IEnumerable<AuctionVM> auctionVMs = _mapper.Map<IEnumerable<AuctionVM>>(auctions);
 
             return View(auctionVMs);
@@ -54,7 +58,7 @@ namespace DistLab2.Controllers
         // GET: AuctionsController/Auction/MyAuctions
         public IActionResult MyAuctions()
         {
-           
+
             return View(DUMMAY_ACTIONS);
 
         }
@@ -69,14 +73,14 @@ namespace DistLab2.Controllers
         // GET: AuctionsController/Details/id
         public ActionResult Details(int id)
         {
-            var action = DUMMAY_ACTIONS.Find(p => p.Id == id); 
+            var action = DUMMAY_ACTIONS.Find(p => p.Id == id);
             return View(action);
         }
 
         // GET: AuctionsController/Edit/id
         public ActionResult Edit(int id)
         {
-            
+
             return View(id);
         }
 
@@ -108,17 +112,21 @@ namespace DistLab2.Controllers
         }
 
 
-        // PUT: AuctionsController/Edit/id
-        [HttpPut("{id}")]
-        public ActionResult Edit(IFormCollection formData, int id)
+        // POST: AuctionsController/Edit/id
+        [HttpPost]
+        public ActionResult Edit(int id, IFormCollection formData)
         {
             string description = formData["description"];
-            
-            System.Console.WriteLine("-----------------------------");
-            System.Console.WriteLine("Editing auction with ID: " + id);
-            System.Console.WriteLine("New description: " + description);
-            System.Console.WriteLine("-----------------------------");
+            Console.WriteLine("Editing auction with ID: " + id+ "\nNew description: " + description);
             return View();
+        }
+
+         // POST: AuctionsController/Delete/id
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            Console.WriteLine("Deleting auction with ID: " + id);
+            return View("MyAuctions", DUMMAY_ACTIONS);
         }
     }
 }

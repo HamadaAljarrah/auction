@@ -15,15 +15,26 @@ namespace DistLab2.Core
             _auctionReposetory = auctinReposetory;
             _mapper = mapper;
         }
-        public void CreateAuction(int auctionId, string name, DateTime endDate, string description)
+        public void CreateAuction(int auctionId, string name, DateTime createdDate, DateTime endDate, string description, decimal statingPrice)
         {
             Console.WriteLine("in creat auction" + name);
 
-            Auction auction = new Auction(auctionId, name, endDate, description);
+            Auction auction = new Auction()
+            {
+                Id = auctionId,
+                Name = name,
+                Description = description,
+                StartingPrice = statingPrice,
+                CreatedDate = createdDate,
+
+
+            };
             AuctionDb auctionDb = _mapper.Map<AuctionDb>(auction);
 
             _auctionReposetory.Add(auctionDb);
+            
         }
+
 
 
         //public IEnumerable<AuctionVM> GetAll()
