@@ -3,6 +3,7 @@ using DistLab2.Persistence;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using NuGet.Packaging.Signing;
 using AutoMapper;
+using DistLab2.ViewModels;
 
 namespace DistLab2.Core
 {
@@ -23,12 +24,26 @@ namespace DistLab2.Core
 
             _auctionReposetory.Add(auctionDb);
         }
-    
+
+
+        //public IEnumerable<AuctionVM> GetAll()
+        //{
+        //    Console.WriteLine("IN GET ALL");
+        //    IEnumerable<AuctionDb> auctionDBs = _auctionReposetory.GetAll();
+
+        //    IEnumerable<AuctionVM> auctions = _mapper.Map<IEnumerable<AuctionVM>>(auctionDBs);//todo ska det vara vms eller auctions
+
+        //    return auctions;
+        //}
 
         public IEnumerable<Auction> GetAll()
         {
-            //retunerar all auctions
-            throw new NotImplementedException();
+            Console.WriteLine("IN GET ALL");
+            IEnumerable<AuctionDb> auctionDBs = _auctionReposetory.GetAll();
+
+            IEnumerable<Auction> auctions = _mapper.Map<IEnumerable<Auction>>(auctionDBs);
+
+            return auctions;
         }
 
         public void Remove(Auction auction)

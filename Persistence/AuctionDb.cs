@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DistLab2.Core;
 
 namespace DistLab2.Persistence
 {
@@ -12,5 +13,8 @@ namespace DistLab2.Persistence
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime CreatedDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public IEnumerable<Bid> _bids { get; set; }
+
     }
 }

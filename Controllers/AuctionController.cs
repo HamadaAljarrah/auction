@@ -1,5 +1,8 @@
 using System.Globalization;
+using AutoMapper;
+using DistLab2.Core;
 using DistLab2.Core.Interfaces;
+using DistLab2.Persistence;
 using DistLab2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +11,7 @@ namespace DistLab2.Controllers
 {
     public class AuctionController : Controller
     {
-
+        private readonly IMapper _mapper;
 
         private readonly List<AuctionVM> DUMMAY_ACTIONS = new()
             {
@@ -32,16 +35,19 @@ namespace DistLab2.Controllers
             };
 
         private readonly IAuctionService _auctionService;
-        public AuctionController(IAuctionService auctionService)
+        public AuctionController(IAuctionService auctionService, IMapper mapper)
         {
             _auctionService = auctionService;
+            _mapper = mapper;
         }
 
         // GET: AuctionsController
         public IActionResult Index()
         {
             var auctions = _auctionService.GetAll();
-            return View(DUMMAY_ACTIONS);
+            IEnumerable<AuctionVM> auctionVMs = _mapper.Map<IEnumerable<AuctionVM>>(auctions);
+
+            return View(auctionVMs);
 
         }
 
