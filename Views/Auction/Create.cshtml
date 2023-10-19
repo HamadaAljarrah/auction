@@ -3,27 +3,27 @@
 }
 
 <section class="h-full pt-8">
-  <div class="w-[500px] rounded-3xl bg-white m-auto  p-8 border-[0.5px] border-[c7c7c7]">
+  <div class="w-[500px] rounded-3xl bg-white m-auto  p-8 ">
     <h1 class="mb-8 text-center text-3xl font-bold">Create Auction</h1>
-    <form asp-controller="Auction" asp-action="Create" method="post" >
+    <form asp-controller="Auction" asp-action="Create" method="post" enctype="multipart/form-data">
       <div class="flex flex-col gap-4">
-
+        
         <input name="name" placeholder=" Title"
-          class="w-full rounded-xl bg-slate-50 p-3 px-4 placeholder:font-light focus:outline-black" type="text" />
+          class="w-full rounded-xl bg-cus-bg p-3 px-4 placeholder:font-light focus:outline-black" type="text" />
 
         <textarea name="description" rows="5" placeholder="Description"
-          class="w-full resize-none rounded-xl bg-slate-50 p-3 px-4 placeholder:font-light focus:outline-black"
+          class="w-full resize-none rounded-xl bg-cus-bg p-3 px-4 placeholder:font-light focus:outline-black"
           type="text"></textarea>
 
         <input name="endDate" placeholder="Ending Date"
-          class="w-full rounded-xl bg-slate-50 p-3 px-4 text-black/30 placeholder:font-light focus:outline-black"
+          class="w-full rounded-xl bg-cus-bg p-3 px-4 text-black/30 placeholder:font-light focus:outline-black"
           type="date" />
 
         <input name="startPrice" placeholder="Start price"
-          class="w-full rounded-xl bg-slate-50 p-3 px-4 placeholder:font-light focus:outline-black" type="number" />
+          class="w-full rounded-xl bg-cus-bg p-3 px-4 placeholder:font-light focus:outline-black" type="number" />
 
-        <input name="image" placeholder="Start price"
-          class="w-full rounded-xl bg-slate-50 p-3 px-4 placeholder:font-light focus:outline-black text-black/30 font-light"
+        <input name="image"
+          class="w-full rounded-xl bg-cus-bg p-3 px-4 placeholder:font-light focus:outline-black text-black/30 font-light"
           type="file" />
 
         <button type="submit" class="mt-2 w-full rounded-xl bg-black/90 p-3 text-white">Publish</button>

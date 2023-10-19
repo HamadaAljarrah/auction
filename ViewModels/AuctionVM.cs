@@ -4,11 +4,12 @@ namespace DistLab2.ViewModels
 {
     public class AuctionVM
     {
-        public int AuctionId { get; set; } 
+        public int Id { get; set; } 
         public string Name { get; set; }
         public string Description {get;set;}
         public DateTime CreatedDate { get; set; }
         public decimal StartingPrice { get; set; }
+        public DateTime EndingDate{get;set;}
 
         public List<BidVM> Bids = new();
         
@@ -17,7 +18,7 @@ namespace DistLab2.ViewModels
         {
             return new AuctionVM
             {
-                AuctionId = auction.AuctionId,
+                Id = auction.Id,
                 Name = auction.Name,
                 CreatedDate = auction.EndDate,
                 StartingPrice = auction.StartingPrice,

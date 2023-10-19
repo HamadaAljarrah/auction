@@ -1,3 +1,4 @@
+using System.Globalization;
 using DistLab2.Core.Interfaces;
 using DistLab2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,27 @@ namespace DistLab2.Controllers
     {
 
 
+        private readonly List<AuctionVM> DUMMAY_ACTIONS = new()
+            {
+                new AuctionVM
+                {
+                    Name = "Monalisa",
+                    Description = "Painting, the expression of ideas and emotions, with the creation of certain aesthetic qualities, in a two-dimensional visual language. The elements of this language, its shapes, lines, colours, tones, and texture are used in various ways to produce sensations of volume, space, movement, and light on",
+                    CreatedDate = DateTime.Now,
+                    StartingPrice = 300,
+                    EndingDate = DateTime.Now,
+                    Bids = new()
+                },
+                 new AuctionVM
+                {
+                    Name = "Africa",
+                    Description = "Painting, the expression of ideas and emotions, with the creation of certain aesthetic qualities, in a two-dimensional visual language. The elements of this language, its shapes, lines, colours, tones, and texture are used in various ways to produce sensations of volume, space, movement, and light on",
+                    CreatedDate = DateTime.Now,
+                    StartingPrice = 500,
+                    Bids = new() 
+                },
+            };
+
         private readonly IAuctionService _auctionService;
         public AuctionController(IAuctionService auctionService)
         {
@@ -18,55 +40,16 @@ namespace DistLab2.Controllers
         // GET: AuctionsController
         public IActionResult Index()
         {
-            List<AuctionVM> data = new()
-            {
-                new AuctionVM
-                {
-                    Name = "Monalisa",
-                    Description = "Painting, the expression of ideas and emotions, with the creation of certain aesthetic qualities, in a two-dimensional visual language. The elements of this language, its shapes, lines, colours, tones, and texture are used in various ways to produce sensations of volume, space, movement, and light on",
-                    CreatedDate = DateTime.Now,
-                    StartingPrice = 300,
-                    Bids = new()
-                },
-                 new AuctionVM
-                {
-                    Name = "Aftica",
-                    Description = "Painting, the expression of ideas and emotions, with the creation of certain aesthetic qualities, in a two-dimensional visual language. The elements of this language, its shapes, lines, colours, tones, and texture are used in various ways to produce sensations of volume, space, movement, and light on",
-                    CreatedDate = DateTime.Now,
-                    StartingPrice = 500,
-                    Bids = new()
-                },
-            };
-
-            return View(data);
+            var auctions = _auctionService.GetAll();
+            return View(DUMMAY_ACTIONS);
 
         }
 
-
-     // GET: AuctionsController/Auction/MyAuctions
-         public IActionResult MyAuctions()
+        // GET: AuctionsController/Auction/MyAuctions
+        public IActionResult MyAuctions()
         {
-            List<AuctionVM> data = new()
-            {
-                new AuctionVM
-                {
-                    Name = "Monalisa",
-                    Description = "Painting, the expression of ideas and emotions, with the creation of certain aesthetic qualities, in a two-dimensional visual language. The elements of this language, its shapes, lines, colours, tones, and texture are used in various ways to produce sensations of volume, space, movement, and light on",
-                    CreatedDate = DateTime.Now,
-                    StartingPrice = 300,
-                    Bids = new()
-                },
-                 new AuctionVM
-                {
-                    Name = "Aftica",
-                    Description = "Painting, the expression of ideas and emotions, with the creation of certain aesthetic qualities, in a two-dimensional visual language. The elements of this language, its shapes, lines, colours, tones, and texture are used in various ways to produce sensations of volume, space, movement, and light on",
-                    CreatedDate = DateTime.Now,
-                    StartingPrice = 500,
-                    Bids = new()
-                },
-            };
-
-            return View(data);
+           
+            return View(DUMMAY_ACTIONS);
 
         }
 
@@ -76,33 +59,59 @@ namespace DistLab2.Controllers
             return View();
         }
 
+
+        // GET: AuctionsController/Details/id
+        public ActionResult Details(int id)
+        {
+            var action = DUMMAY_ACTIONS.Find(p => p.Id == id); 
+            return View(action);
+        }
+
+        // GET: AuctionsController/Edit/id
+        public ActionResult Edit(int id)
+        {
+            
+            return View(id);
+        }
+
+
+
         // POST: AuctionsController/Create
         [HttpPost]
         public ActionResult Create(IFormCollection formData)
         {
-            Console.WriteLine(formData["name"]);
-            Console.WriteLine(formData["endDate"]);
-
-            DateTime.TryParse(formData["endDate"], out DateTime endDate);
-
-            Console.WriteLine(formData["description"]);
-            Console.WriteLine(formData["startPrice"]);
-
-            _auctionService.CreateAuction(1, formData["name"], endDate, formData["description"]);
+            string name = formData["name"];
+            string description = formData["description"];
+            if (!DateTime.TryParse(formData["endDate"], out DateTime endDate))
+            {
+                // Return an error view
+            }
+            if (!double.TryParse(formData["startPrice"], NumberStyles.Float, CultureInfo.InvariantCulture, out double startPrice))
+            {
+                // Return an error view
+            }
+            System.Console.WriteLine("-----------------------------");
+            System.Console.WriteLine("Createing auction with values: ");
+            System.Console.WriteLine("Name: " + name);
+            System.Console.WriteLine("Description: " + description);
+            System.Console.WriteLine("End date: " + endDate);
+            System.Console.WriteLine("Start price: " + startPrice);
+            System.Console.WriteLine("Image: " + "TODO");
+            System.Console.WriteLine("-----------------------------");
             return View();
         }
 
 
-
-        // GET: AuctionsController/Details
-        public ActionResult Details()
+        // PUT: AuctionsController/Edit/id
+        [HttpPut("{id}")]
+        public ActionResult Edit(IFormCollection formData, int id)
         {
-            return View();
-        }
-
-          // GET: AuctionsController/Edit
-        public ActionResult Edit()
-        {
+            string description = formData["description"];
+            
+            System.Console.WriteLine("-----------------------------");
+            System.Console.WriteLine("Editing auction with ID: " + id);
+            System.Console.WriteLine("New description: " + description);
+            System.Console.WriteLine("-----------------------------");
             return View();
         }
     }

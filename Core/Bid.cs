@@ -2,9 +2,9 @@
 {
     public class Bid
     {
-        public int BidId {  get; set; }
+        public int Id {  get; set; }
         public decimal Amount { get; set; } 
-        public DateTime BidTime { get; set; }
+        public DateTime CreatedTime { get; set; }
 
         //forign key för användren som placeade budet
         public int UserId { get; set; }

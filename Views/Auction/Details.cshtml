@@ -1,6 +1,9 @@
+@using DistLab2.ViewModels;
+@model AuctionVM
 @{
   ViewData["Title"] = "Auction Details";
 }
+
 <div class="py-4 h-[85vh]">
   <div class="grid-parent h-full">
     <div class="grid-side rounded-3xl bg-white p-8">
@@ -15,29 +18,29 @@
       <div class="flex items-start justify-between">
         <div class="flex items-start gap-3">
           <div>
-            <h1 class="text-3xl font-bold">Mona Lisa</h1>
+            <h1 class="text-3xl font-bold">@Model.Name</h1>
             <p class="text-sm text-black/50">hamada@gmail.com</p>
           </div>
-          <span class="mt-2 rounded-xl bg-green-200 px-3 py-1 text-[12px]">14 Bids</span>
+          <span class="mt-2 rounded-xl bg-green-200 px-3 py-1 text-[12px]">@Model.Bids.Count Bids</span>
         </div>
       </div>
 
       <div class="flex items-center justify-start gap-20">
         <div>
           <p class="text-sm text-black/60">Start price</p>
-          <h3 class="text-3xl font-bold">$330</h3>
+          <h3 class="text-3xl font-bold">$@Model.StartingPrice</h3>
         </div>
         <div>
           <p class="text-sm text-black/60">Bids Made</p>
-          <h3 class="text-3xl font-bold">14</h3>
+          <h3 class="text-3xl font-bold">@Model.Bids.Count</h3>
         </div>
         <div>
           <p class="text-sm text-black/60">Highest Bid</p>
-          <h3 class="text-3xl font-bold">$1330</h3>
+          <h3 class="text-3xl font-bold">$1300</h3>
         </div>
         <div>
           <p class="text-sm text-black/60">Time left</p>
-          <h3 class="text-3xl font-bold">3d</h3>
+          <h3 class="text-3xl font-bold">@Model.EndingDate</h3>
         </div>
 
       </div>
@@ -46,71 +49,23 @@
       <h1 class="mb-3 text-3xl font-bold">Bids</h1>
       <div class="flex flex-grow flex-col justify-between overflow-y-scroll">
         <div class="flex flex-col place-self-stretch">
-
-          <div class="mb-1 flex items-center justify-between border-b-[0.5px] py-3">
-            <div class="flex flex-col items-start gap-2">
-              <h3 class="text-xl font-semibold">User 1</h3>
-              <p class="text-[10px] text-black/50">2023-11-10 22:32</p>
+          @foreach (BidVM bid in Model.Bids)
+          {
+            <div class="mb-1 flex items-center justify-between border-b-[0.5px] py-3">
+              <div class="flex flex-col items-start gap-2">
+                <h3 class="text-xl font-semibold">@bid.Id</h3>
+                <p class="text-[10px] text-black/50">@bid.CreatedTime</p>
+              </div>
+              <p class="text-lg">$@bid.Amount</p>
             </div>
-            <p class="text-lg">$1300</p>
-          </div>
-
-          <div class="mb-1 flex items-center justify-between border-b-[0.5px] py-3">
-            <div class="flex flex-col items-start gap-2">
-              <h3 class="text-xl font-semibold">User 1</h3>
-              <p class="text-[10px] text-black/50">2023-11-10 22:32</p>
-            </div>
-            <p class="text-lg">$1300</p>
-          </div>
-
-          <div class="mb-1 flex items-center justify-between border-b-[0.5px] py-3">
-            <div class="flex flex-col items-start gap-2">
-              <h3 class="text-xl font-semibold">User 1</h3>
-              <p class="text-[10px] text-black/50">2023-11-10 22:32</p>
-            </div>
-            <p class="text-lg">$1300</p>
-          </div>
-
-          <div class="mb-1 flex items-center justify-between border-b-[0.5px] py-3">
-            <div class="flex flex-col items-start gap-2">
-              <h3 class="text-xl font-semibold">User 1</h3>
-              <p class="text-[10px] text-black/50">2023-11-10 22:32</p>
-            </div>
-            <p class="text-lg">$1300</p>
-          </div>
-
-          <div class="mb-1 flex items-center justify-between border-b-[0.5px] py-3">
-            <div class="flex flex-col items-start gap-2">
-              <h3 class="text-xl font-semibold">User 1</h3>
-              <p class="text-[10px] text-black/50">2023-11-10 22:32</p>
-            </div>
-            <p class="text-lg">$1300</p>
-          </div>
-
-          <div class="mb-1 flex items-center justify-between border-b-[0.5px] py-3">
-            <div class="flex flex-col items-start gap-2">
-              <h3 class="text-xl font-semibold">User 1</h3>
-              <p class="text-[10px] text-black/50">2023-11-10 22:32</p>
-            </div>
-            <p class="text-lg">$1300</p>
-          </div>
-
-          <div class="mb-1 flex items-center justify-between border-b-[0.5px] py-3">
-            <div class="flex flex-col items-start gap-2">
-              <h3 class="text-xl font-semibold">User 1</h3>
-              <p class="text-[10px] text-black/50">2023-11-10 22:32</p>
-            </div>
-            <p class="text-lg">$1300</p>
-          </div>
+          }
         </div>
       </div>
       <div class="flex gap-2 pt-3">
         <input placeholder="Amount"
-          class="flex-grow rounded-xl bg-slate-50 p-3 px-4 placeholder:font-light focus:outline-black" type="number" />
+          class="flex-grow rounded-xl bg-cus-bg p-3 px-4 placeholder:font-light focus:outline-black" type="number" />
         <button class="rounded-xl bg-black/90 px-4 py-2 text-white">Place bid</button>
       </div>
     </div>
-
-
   </div>
 </div>

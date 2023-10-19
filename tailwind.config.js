@@ -7,11 +7,12 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                "cus-slate": "#F8FBFD"
+                "cus-bg": "#f3f3f3"
             },
             gridTemplateRows: {
                 '6': 'repeat(6, minmax(0, 1fr))',
-            }
+            },
+            
         },
     },
     plugins: [],

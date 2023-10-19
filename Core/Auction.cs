@@ -2,7 +2,7 @@
 {
     public class Auction
     {
-        public int AuctionId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Auctioneer { get; set; }
@@ -17,7 +17,7 @@
         public IEnumerable<Bid> Bids => _bids;
         public Auction(int auctionId, string name,  DateTime endDate,string description)
         {
-            AuctionId = auctionId;
+            Id = auctionId;
             Name = name;
             EndDate = endDate;
             Description = description;

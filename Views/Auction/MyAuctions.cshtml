@@ -16,14 +16,14 @@
         @foreach (var item in Model)
         {
 
-            <div class="flex flex-col gap-4 bg-white rounded-3xl border-[0.5px] border-[c7c7c7]">
+            <div class="flex flex-col gap-4 bg-white rounded-3xl">
                 <div class="bg-whitw flex gap-4 rounded-md px-6 py-4">
                     <img class="h-24 w-24 rounded-2xl object-cover object-top"
                         src="https://mynewart.se/wp-content/uploads/2016/06/Mona-Lisa.jpg" alt="" />
 
                     <div class="mt-2 flex-1">
-                        <h1 class="mb-1 text-2xl font-bold">Monalisa</h1>
-                        <p class="text-sm text-black/50">Expires 2021-12-22</p>
+                        <h1 class="mb-1 text-2xl font-bold">@item.Name</h1>
+                        <p class="text-sm text-black/50">Expires @item.EndingDate</p>
                     </div>
                     <div class="flex items-center gap-8 pr-2">
 
@@ -37,7 +37,7 @@
                             </svg>
                         </a>
 
-                        <a href="/auction/edit">
+                        <a href="/auction/edit/@item.Id">
                             <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -46,7 +46,7 @@
                             </svg>
                         </a>
 
-                        <a href="/auction/details">
+                        <a href="/auction/details/@item.Id">
                             <svg class="cursor-pointer" width="32" height="32" viewBox="0 0 32 32" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path

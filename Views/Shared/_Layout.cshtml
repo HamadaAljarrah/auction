@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
 </head>
 
-<body class="overflow-y-auto flex flex-col justify-between bg-slate-50 ">
+<body class="overflow-y-auto flex flex-col justify-between bg-cus-bg ">
     <header>
         <nav class="py-3 bg-white ">
             <div class="container">
@@ -21,11 +21,14 @@
                         <span class="w-2 h-2 rounded-full bg-red-600"></span>
                     </a>
                     <div class="flex gap-4">
-                        <a href="/auction" class="">Auctions</a>
-                        <a href="/auction/myauctions" class="">My Auctions</a>
+                        <a href="/auction">Auctions</a>
+                        <a href="/auction/myauctions">My Auctions</a>
+                        <a href="/auction">Attended auctions</a>
+                        <a href="/auction">Winning auctions</a>
+
                     </div>
                     <div class="flex items-center gap-4">
-                        <a href="/auth/login" class="">Login</a>
+                        <a href="/auth/login">Login</a>
                         <a href="/auth/register" class="rounded-lg bg-black/90 px-4 py-2 text-white transition-all hover:bg-black/80">Sign up</a>
                     </div>
                 </div>
