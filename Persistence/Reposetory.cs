@@ -22,7 +22,7 @@ namespace DistLab2.Persistence
 
         public T GetById(int id)
         {
-            return _dbSet.FirstOrDefault(e => e.GetHashCode() == id);
+            return _dbSet.Find(id);
         }
 
         public IEnumerable<T> Find(Func<T, bool> predicate)
@@ -46,6 +46,5 @@ namespace DistLab2.Persistence
         {
             _dbSet.Remove(entity);
         }
-
     }
 }

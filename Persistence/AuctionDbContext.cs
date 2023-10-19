@@ -21,15 +21,7 @@ namespace DistLab2.Persistence
                 .WithMany(a => a.Bids)
                 .HasForeignKey(b => b.AuctionId);
 
-            modelBuilder.Entity<AuctionDb>().HasData(
-                new AuctionDb
-                {
-                    Id = -1,
-                    Name = "TEST from aucton db dontext",
-                    CreatedDate = DateTime.Now,
-                    Description = "test description"
-
-                });
+ 
         }
     }
 }

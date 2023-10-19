@@ -2,7 +2,6 @@ using System.Globalization;
 using AutoMapper;
 using DistLab2.Core;
 using DistLab2.Core.Interfaces;
-using DistLab2.Persistence;
 using DistLab2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,9 +48,7 @@ namespace DistLab2.Controllers
         public IActionResult Index()
         {
             var auctions = _auctionService.GetAll();
-            Console.WriteLine(auctions);
-            Console.WriteLine(auctions.ToString());
-            Console.WriteLine("_____________");
+      
 
             IEnumerable<AuctionVM> auctionVMs = _mapper.Map<IEnumerable<AuctionVM>>(auctions);
 
@@ -62,8 +59,10 @@ namespace DistLab2.Controllers
         // GET: AuctionsController/Auction/MyAuctions
         public IActionResult MyAuctions()
         {
+            var auctions = _auctionService.GetAll();
 
-            return View(DUMMAY_ACTIONS);
+            IEnumerable<AuctionVM> auctionVMs = _mapper.Map<IEnumerable<AuctionVM>>(auctions);
+            return View(auctionVMs);
 
         }
 
@@ -77,7 +76,9 @@ namespace DistLab2.Controllers
         // GET: AuctionsController/Details/id
         public ActionResult Details(int id)
         {
-            var action = DUMMAY_ACTIONS.Find(p => p.Id == id);
+            var action = _auctionService.GetById(id);
+
+            //var action = DUMMAY_ACTIONS.Find(p => p.Id == id);//dummy
             return View(action);
         }
 

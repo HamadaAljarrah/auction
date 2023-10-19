@@ -3,7 +3,9 @@
     public interface IAuctionService
     {
        public IEnumerable<Auction> GetAll();
-       public void CreateAuction(Auction auction);
+        public Auction GetById(int id);
+
+        public void CreateAuction(Auction auction);
        public void Remove(Auction auction);
 
 

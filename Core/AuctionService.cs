@@ -46,5 +46,13 @@ namespace DistLab2.Core
         {
             throw new NotImplementedException();
         }
+        public Auction GetById(int id)
+        {
+            AuctionDb auctionDb = _auctionReposetory.GetById(id);
+
+            Auction auction = _mapper.Map<Auction>(auctionDb);
+
+            return auction;
+        }
     }
 }
