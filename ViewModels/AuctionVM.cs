@@ -11,6 +11,8 @@ namespace DistLab2.ViewModels
         public decimal StartingPrice { get; set; }
         public DateTime EndingDate{get;set;}
 
+        public string Username {get;set;}
+
         public List<BidVM> Bids = new();
         
         //todo läg in samtlig auctons medlemsvariablar
