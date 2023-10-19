@@ -55,37 +55,6 @@ namespace DistLab2.Controllers
 
         }
 
-        // GET: AuctionsController/Auction/MyAuctions
-        public IActionResult MyAuctions()
-        {
-
-            return View(DUMMAY_ACTIONS);
-
-        }
-
-        // GET: AuctionsController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-
-        // GET: AuctionsController/Details/id
-        public ActionResult Details(int id)
-        {
-            var action = DUMMAY_ACTIONS.Find(p => p.Id == id);
-            return View(action);
-        }
-
-        // GET: AuctionsController/Edit/id
-        public ActionResult Edit(int id)
-        {
-
-            return View(id);
-        }
-
-
-
         // POST: AuctionsController/Create
         [HttpPost]
         public ActionResult Create(IFormCollection formData)
