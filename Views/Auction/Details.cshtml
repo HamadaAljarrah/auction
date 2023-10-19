@@ -5,8 +5,8 @@
 }
 
 @{
-  TimeSpan timeLeft = Model.EndingDate - DateTime.Now;
-  decimal hieghestBid = Model.Bids.Count > 0 ? Model.Bids.Max(b => b.Amount) : 0;
+  // TimeSpan timeLeft = Model.EndingDate - DateTime.Now;
+  // decimal hieghestBid = Model.Bids.Count > 0 ? Model.Bids.Max(b => b.Amount) : 0;
 }
 
 <div class="py-4 h-[85vh]">
@@ -36,6 +36,7 @@
           <p class="text-sm text-black/60">Bids Made</p>
           <h3 class="text-3xl font-bold">@Model.Bids.Count</h3>
         </div>
+        
         <div>
           <p class="text-sm text-black/60">Highest Bid</p>
           <h3 class="text-3xl font-bold">$@hieghestBid</h3>
@@ -45,6 +46,7 @@
           <h3 class="text-3xl font-bold">@($"{timeLeft.Days}d:{timeLeft.Hours}h")</h3>
         </div>
 
+        
       </div>
     </div>
     <div class="grid-body relative flex flex-col rounded-3xl bg-white p-8">
