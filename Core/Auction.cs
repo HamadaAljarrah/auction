@@ -1,4 +1,6 @@
-﻿namespace DistLab2.Core
+﻿using AutoMapper.Internal.Mappers;
+
+namespace DistLab2.Core
 {
     public class Auction
     {
@@ -18,5 +20,13 @@
         public IEnumerable<Bid> Bids => _bids;
         public Auction(){}
 
+        public override string ToString()
+        {
+            return $"Auction Id: {Id}, Name: {Name}, Description: {Description}, " +
+                   $"Starting Price: {StartingPrice}, Created Date: {CreatedDate}, " +
+                   $"End Date: {EndDate}, User Id: {UserId}";
+        }
+
     }
+
 }

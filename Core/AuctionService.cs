@@ -49,10 +49,17 @@ namespace DistLab2.Core
 
         public IEnumerable<Auction> GetAll()
         {
-            Console.WriteLine("IN GET ALL");
             IEnumerable<AuctionDb> auctionDBs = _auctionReposetory.GetAll();
 
             IEnumerable<Auction> auctions = _mapper.Map<IEnumerable<Auction>>(auctionDBs);
+            Console.WriteLine("Printing the list of auctions:");
+
+            foreach (var auction in auctions)
+            {
+                Console.WriteLine($"Auction Id: {auction.Id}, Name: {auction.Name}, Description: {auction.Description}, " +
+                                   $"Starting Price: {auction.StartingPrice}, Created Date: {auction.CreatedDate}, " +
+                                   $"End Date: {auction.EndDate}, User Id: {auction.UserId}");
+            }
 
             return auctions;
         }
