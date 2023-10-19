@@ -51,15 +51,14 @@ namespace DistLab2.Migrations
                     Amount = table.Column<int>(type: "int", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    AuctionId = table.Column<int>(type: "int", nullable: false),
-                    AuctionDbId = table.Column<int>(type: "int", nullable: false)
+                    AuctionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BidDb", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BidDb_AuctionDbs_AuctionDbId",
-                        column: x => x.AuctionDbId,
+                        name: "FK_BidDb_AuctionDbs_AuctionId",
+                        column: x => x.AuctionId,
                         principalTable: "AuctionDbs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -74,12 +73,12 @@ namespace DistLab2.Migrations
             migrationBuilder.InsertData(
                 table: "AuctionDbs",
                 columns: new[] { "Id", "CreatedDate", "Description", "EndDate", "Name" },
-                values: new object[] { -1, new DateTime(2023, 10, 19, 17, 40, 17, 615, DateTimeKind.Local).AddTicks(2973), "test description", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "TEST from aucton db dontext" });
+                values: new object[] { -1, new DateTime(2023, 10, 19, 18, 6, 1, 120, DateTimeKind.Local).AddTicks(4088), "test description", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "TEST from aucton db dontext" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BidDb_AuctionDbId",
+                name: "IX_BidDb_AuctionId",
                 table: "BidDb",
-                column: "AuctionDbId");
+                column: "AuctionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BidDb_UserId",

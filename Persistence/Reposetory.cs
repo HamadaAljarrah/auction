@@ -6,7 +6,6 @@ namespace DistLab2.Persistence
 {
     public class Reposetory<T> : IReposetory<T> where T : class
     {
-        private List<T> entities;
         private readonly AuctionDbContext _context;
         private readonly DbSet<T> _dbSet;
 
@@ -14,22 +13,21 @@ namespace DistLab2.Persistence
         {
             _context = context;
             _dbSet = context.Set<T>();
-            entities = new List<T>();//todo remove
         }
         //läg en konstorutor per context typ så en för user osv
         public IEnumerable<T> GetAll()
         {
-            return entities;
+            return _dbSet.ToList();
         }
 
         public T GetById(int id)
         {
-            return entities.FirstOrDefault(e => e.GetHashCode() == id);
+            return _dbSet.FirstOrDefault(e => e.GetHashCode() == id);
         }
 
         public IEnumerable<T> Find(Func<T, bool> predicate)
         {
-            return entities.Where(predicate);
+            return _dbSet.Where(predicate);
         }
 
         public void Add(T entity)
@@ -46,7 +44,7 @@ namespace DistLab2.Persistence
 
         public void Remove(T entity)
         {
-            entities.Remove(entity);
+            _dbSet.Remove(entity);
         }
 
     }

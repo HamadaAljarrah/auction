@@ -48,7 +48,11 @@ namespace DistLab2.Controllers
         // GET: AuctionsController
         public IActionResult Index()
         {
-             var auctions = _auctionService.GetAll();
+            var auctions = _auctionService.GetAll();
+            Console.WriteLine(auctions);
+            Console.WriteLine(auctions.ToString());
+            Console.WriteLine("_____________");
+
             IEnumerable<AuctionVM> auctionVMs = _mapper.Map<IEnumerable<AuctionVM>>(auctions);
 
             return View(auctionVMs);
@@ -107,6 +111,18 @@ namespace DistLab2.Controllers
             System.Console.WriteLine("Start price: " + startPrice);
             System.Console.WriteLine("Image: " + "TODO");
             System.Console.WriteLine("-----------------------------");
+
+
+            Auction auction = new Auction
+            {
+                Name = name,
+                Description = description,
+                StartingPrice = (decimal)startPrice,
+                CreatedDate = DateTime.Now,  
+                EndDate = endDate
+            };
+
+            _auctionService.CreateAuction(auction);    
             return View();
         }
 

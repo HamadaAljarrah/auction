@@ -15,7 +15,7 @@ namespace DistLab2.Persistence
         public DateTime CreatedDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Description { get; set; }
-        public IEnumerable<BidDb> BidDbs{ get; set; }
+        public IEnumerable<BidDb> Bids{ get; set; }
 
     }
 }

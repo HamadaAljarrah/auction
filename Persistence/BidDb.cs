@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using DistLab2.Core;
 
 namespace DistLab2.Persistence
@@ -15,8 +16,9 @@ namespace DistLab2.Persistence
         public User User { get; set; }
 
         //forign key för auctionen
+        [ForeignKey("Auction")]
         public int AuctionId { get; set; }
-        public AuctionDb AuctionDb { get; set; }
+        public AuctionDb Auction { get; set; }
     }
 
 }

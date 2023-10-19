@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DistLab2.Core;
 using DistLab2.Persistence;
+using DistLab2.ViewModels;
 
 namespace DistLab2
 {
@@ -9,7 +10,9 @@ namespace DistLab2
         public AutoMapperProfile()
         {
             CreateMap<AuctionDb, Auction>().ReverseMap();
-            //CreateMap<AuctionView, Auction>().ReverseMap();
+            CreateMap<AuctionVM, Auction>().ReverseMap();
+            CreateMap<Auction, AuctionVM>().ReverseMap();
+
         }
     }
 }

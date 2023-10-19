@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DistLab2.Migrations
 {
     [DbContext(typeof(AuctionDbContext))]
-    [Migration("20231019154017_Initial")]
+    [Migration("20231019160601_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -81,7 +81,7 @@ namespace DistLab2.Migrations
                         new
                         {
                             Id = -1,
-                            CreatedDate = new DateTime(2023, 10, 19, 17, 40, 17, 615, DateTimeKind.Local).AddTicks(2973),
+                            CreatedDate = new DateTime(2023, 10, 19, 18, 6, 1, 120, DateTimeKind.Local).AddTicks(4088),
                             Description = "test description",
                             EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "TEST from aucton db dontext"
@@ -99,9 +99,6 @@ namespace DistLab2.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int>("AuctionDbId")
-                        .HasColumnType("int");
-
                     b.Property<int>("AuctionId")
                         .HasColumnType("int");
 
@@ -113,7 +110,7 @@ namespace DistLab2.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuctionDbId");
+                    b.HasIndex("AuctionId");
 
                     b.HasIndex("UserId");
 
@@ -122,9 +119,9 @@ namespace DistLab2.Migrations
 
             modelBuilder.Entity("DistLab2.Persistence.BidDb", b =>
                 {
-                    b.HasOne("DistLab2.Persistence.AuctionDb", "AuctionDb")
-                        .WithMany("BidDbs")
-                        .HasForeignKey("AuctionDbId")
+                    b.HasOne("DistLab2.Persistence.AuctionDb", "Auction")
+                        .WithMany("Bids")
+                        .HasForeignKey("AuctionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -134,14 +131,14 @@ namespace DistLab2.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AuctionDb");
+                    b.Navigation("Auction");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("DistLab2.Persistence.AuctionDb", b =>
                 {
-                    b.Navigation("BidDbs");
+                    b.Navigation("Bids");
                 });
 #pragma warning restore 612, 618
         }
