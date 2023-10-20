@@ -20,6 +20,7 @@ namespace DistLab2.Core
 
         public void CreateUser(User user)
         {
+            Console.WriteLine("user n ____" + user.Email);
             UserDb userDb = _mapper.Map<UserDb>(user);
 
             _userRepository.Add(userDb);

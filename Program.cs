@@ -33,6 +33,10 @@ builder.Services.AddScoped<IAuctionService, AuctionService>();
 builder.Services.AddScoped<IReposetory<AuctionDb>, Reposetory<AuctionDb>>();
 builder.Services.AddScoped<IReposetory<BidDb>, Reposetory<BidDb>>();
 
+builder.Services.AddScoped<IUserService, UserService>();//todo testa om den ska va här
+builder.Services.AddScoped<IReposetory<UserDb>, Reposetory<UserDb>>();
+
+
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddScoped<UserManager<IdentityUser>>();
