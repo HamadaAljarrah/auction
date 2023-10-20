@@ -36,11 +36,14 @@ namespace DistLab2.Persistence
         public virtual IEnumerable<BidDb> Bids{ get; set; }=new List<BidDb>();
 
 
-        // Relation to UsertDb and virtuell for lazyloading
-        [ForeignKey("User")]
+        //// Relation to UsertDb and virtuell for lazyloading
+        //[ForeignKey("User")]
+        ////public string UserId { get; set; }
+        //public UserDb User {get;set;}
+
+        // Foreign key for the user
+        [ForeignKey("UserId")]
         public string UserId { get; set; }
-        public UserDb User {get;set;}
-
-
+        public virtual UserDb User { get; set; }
     }
 }

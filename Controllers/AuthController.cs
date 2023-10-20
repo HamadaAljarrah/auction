@@ -88,8 +88,6 @@ namespace DistLab2.Controllers
                 ModelState.AddModelError("", "Wrong email or password.");
 
             }
-
-
             return View();
         }
 

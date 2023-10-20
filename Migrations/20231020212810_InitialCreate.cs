@@ -72,7 +72,7 @@ namespace DistLab2.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Email",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

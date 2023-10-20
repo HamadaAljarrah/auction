@@ -125,7 +125,7 @@ namespace DistLab2.Migrations
                     b.HasOne("DistLab2.Persistence.UserDb", "User")
                         .WithMany("Bids")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Auction");

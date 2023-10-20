@@ -18,16 +18,25 @@ namespace DistLab2.Persistence
 
 
 
-        //forign key för auctionen
-        [ForeignKey("Auction")]
+        ////forign key för auctionen
+        //[ForeignKey("Auction")]
+        //public int AuctionId { get; set; }
+        //public virtual AuctionDb Auction { get; set; }
+
+
+        //// Relation to UsertDb and virtuell for lazyloading
+        //[ForeignKey("User")]
+        ////public string UserId { get; set; }
+        //public UserDb User { get; set; }
+        // Foreign key for the auction
+        [ForeignKey("AuctionId")]
         public int AuctionId { get; set; }
         public virtual AuctionDb Auction { get; set; }
-        
 
-        // Relation to UsertDb and virtuell for lazyloading
-        [ForeignKey("User")]
+        // Foreign key for the user
+        [ForeignKey("UserId")]
+        public virtual UserDb User { get; set; }
         public string UserId { get; set; }
-        public UserDb User {get;set;}
     }
 
 }

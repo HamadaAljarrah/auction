@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using DistLab2.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace DistLab2.Persistence
@@ -11,19 +12,21 @@ namespace DistLab2.Persistence
         public DbSet<UserDb>? Users { get; set; }
 
 
-        // protected override void OnModelCreating(ModelBuilder modelBuilder)
-        // {
-        //     modelBuilder.Entity<AuctionDb>()
-        //         .HasMany(a => a.Bids)
-        //         .WithOne(b => b.Auction)
-        //         .HasForeignKey(b => b.AuctionId);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<BidDb>()
+            .HasOne(b => b.Auction)
+            .WithMany(a => a.Bids)
+            .HasForeignKey(b => b.AuctionId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-        //     modelBuilder.Entity<BidDb>()
-        //         .HasOne(b => b.Auction)
-        //         .WithMany(a => a.Bids)
-        //         .HasForeignKey(b => b.AuctionId);
+            modelBuilder.Entity<BidDb>()
+                .HasOne(b => b.User)
+                .WithMany(u => u.Bids)
+                .HasForeignKey(b => b.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
- 
-        // }
+        }
+
     }
 }
