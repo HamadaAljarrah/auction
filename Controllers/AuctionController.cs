@@ -22,7 +22,7 @@ namespace DistLab2.Controllers
                     CreatedDate = DateTime.Now,
                     StartingPrice = 300,
                     Username = "hamada@gmail.com",
-                    EndingDate = new DateTime(2023, 12, 31, 23, 59, 59),
+                    EndDate = new DateTime(2023, 12, 31, 23, 59, 59),
                     Bids = new()
                 },
                  new AuctionVM

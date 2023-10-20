@@ -9,7 +9,7 @@ namespace DistLab2.ViewModels
         public string Description {get;set;}
         public DateTime CreatedDate { get; set; }
         public decimal StartingPrice { get; set; }
-        public DateTime EndingDate{get;set;}
+        public DateTime EndDate{get;set;}
 
         public string Username {get;set;}
 
