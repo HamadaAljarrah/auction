@@ -4,18 +4,18 @@ namespace DistLab2.ViewModels
 {
     public class AuctionVM
     {
-        public int Id { get; set; } 
+        public int Id { get; set; }
         public string Name { get; set; }
-        public string Description {get;set;}
-        public DateTime CreatedDate { get; set; }
+        public string Description { get; set; }
         public decimal StartingPrice { get; set; }
-        public DateTime EndDate{get;set;}
+        public DateTime CreatedDate { get; set; }
 
-        public string Username {get;set;}
+        public DateTime EndDate { get; set; }
+
+        public int UserId { get; set; }
 
         public List<BidVM> Bids = new();
         
-        //todo läg in samtlig auctons medlemsvariablar
         public static AuctionVM FromAuction(Auction auction)
         {
             return new AuctionVM

@@ -8,17 +8,22 @@ namespace DistLab2.Persistence
     {
         [Key]
         public int Id { get; set; }
+        
+        [Required]
         public int Amount { get; set; }
+
+        [Required]
+        [DataType(DataType.DateTime)]
         public DateTime CreatedTime { get; set; }
 
         //forign key för användren som placeade budet
         public int UserId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         //forign key för auctionen
         [ForeignKey("Auction")]
         public int AuctionId { get; set; }
-        public AuctionDb Auction { get; set; }
+        public virtual AuctionDb Auction { get; set; }
     }
 
 }

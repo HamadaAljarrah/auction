@@ -7,15 +7,32 @@ namespace DistLab2.Persistence
     {
         [Key]
         public int Id { get; set; }
+
+
         [Required]
         [MaxLength (128)]
         public string Name { get; set; }
+
+
+        
+        [Required]
+        public string Description { get; set; }
+
+
+        [Required]
+        public decimal StartingPrice { get; set; }
+       
+        
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime CreatedDate { get; set; }
+
+       
+        [Required]
+        [DataType(DataType.DateTime)] 
         public DateTime EndDate { get; set; }
-        public string Description { get; set; }
-        public IEnumerable<BidDb> Bids{ get; set; }
+        
+        public virtual IEnumerable<BidDb> Bids{ get; set; }=new List<BidDb>();
 
     }
 }
