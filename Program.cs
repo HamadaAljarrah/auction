@@ -13,6 +13,8 @@ builder.Services.AddDbContext<AuctionDbContext>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAuctionService, AuctionService>();
 builder.Services.AddScoped<IReposetory<AuctionDb>, Reposetory<AuctionDb>>();
+builder.Services.AddScoped<IReposetory<BidDb>, Reposetory<BidDb>>();
+
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 //builder.Services.AddDbContext<AuctionDbContext>(options =>
 //    options.UseSqlite(builder.Configuration.GetConnectionString("AuctionDbConnection")));

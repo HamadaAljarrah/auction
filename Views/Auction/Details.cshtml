@@ -5,7 +5,7 @@
 }
 
 @{
-  TimeSpan timeLeft = Model.EndDate - DateTime.Now;
+  TimeSpan timeLeft = Model.EndDate - DateTime.Now;//todo fix bug when null
   decimal hieghestBid = Model.Bids.Count > 0 ? Model.Bids.Max(b => b.Amount) : 0;
 }
 
@@ -21,7 +21,7 @@
         <div class="flex items-start gap-3">
           <div>
             <h1 class="text-3xl font-bold">@Model.Name</h1>
-            <p class="text-sm text-black/50">@Model.Username</p>
+                        <p class="text-sm text-black/50">User id : @Model.UserId</p>
           </div>
           <span class="mt-2 rounded-xl bg-green-200 px-3 py-1 text-[12px]">@Model.Bids.Count Bids</span>
         </div>
@@ -62,9 +62,10 @@
           }
         </div>
       </div>
-      <form class="flex gap-2 pt-3">
-        <input placeholder="Amount"
+            <form asp-action="PlaceBid" asp-controller="Auction" method="post" class="flex gap-2 pt-3">
+                <input  name="Amount" placeholder="Amount"
           class="flex-grow rounded-xl bg-cus-bg p-3 px-4 placeholder:font-light focus:outline-black" type="number" />
+          <input name="Id" value="@Model.Id" type="hidden" />
         <button type="submit" class="rounded-xl bg-black/90 px-4 py-2 text-white">Place bid</button>
       </form>
     </div>
