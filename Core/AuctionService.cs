@@ -73,11 +73,14 @@ namespace DistLab2.Core
             BidDb newBid = new BidDb //todo läg dynamic id
             {
                 Amount = bidAmount,
-                UserId = "-1",
+                AuctionId= auctionId,
+                UserId = "Marcus.Okodugha247@gmail.com",
                 CreatedTime = DateTime.Now
             };
             Console.WriteLine("Amount s " + newBid.Amount);
             Console.WriteLine("UserId s " + newBid.UserId);
+            Console.WriteLine("a id  " + auctionId);
+
             Console.WriteLine("Amount s " + newBid.CreatedTime);
 
 
