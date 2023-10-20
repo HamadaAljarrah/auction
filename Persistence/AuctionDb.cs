@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using DistLab2.Core;
 
 namespace DistLab2.Persistence
@@ -33,6 +34,13 @@ namespace DistLab2.Persistence
         public DateTime EndDate { get; set; }
         
         public virtual IEnumerable<BidDb> Bids{ get; set; }=new List<BidDb>();
+
+
+        // Relation to UsertDb and virtuell for lazyloading
+        [ForeignKey("User")]
+        public string UserId { get; set; }
+        public UserDb User {get;set;}
+
 
     }
 }

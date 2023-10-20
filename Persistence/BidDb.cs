@@ -16,14 +16,18 @@ namespace DistLab2.Persistence
         [DataType(DataType.DateTime)]
         public DateTime CreatedTime { get; set; }
 
-        //forign key för användren som placeade budet
-        public int UserId { get; set; }
-        public virtual User User { get; set; }
+
 
         //forign key för auctionen
         [ForeignKey("Auction")]
         public int AuctionId { get; set; }
         public virtual AuctionDb Auction { get; set; }
+        
+
+        // Relation to UsertDb and virtuell for lazyloading
+        [ForeignKey("User")]
+        public string UserId { get; set; }
+        public UserDb User {get;set;}
     }
 
 }

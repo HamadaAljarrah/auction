@@ -12,7 +12,7 @@ namespace DistLab2.ViewModels
 
         public DateTime EndDate { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public List<BidVM> Bids = new();
         

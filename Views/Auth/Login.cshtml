@@ -1,19 +1,30 @@
+@model DistLab2.ViewModels.LoginVM;
+
 @{
     ViewData["Title"] = "Login";
 }
 
+
 <section class="h-full pt-[140px]">
     <div class="w-96 rounded-3xl bg-white p-8 m-auto">
         <h1 class="mb-8 text-center text-3xl font-bold">Login</h1>
-        <div class="flex flex-col gap-4">
-            <input placeholder="Email" class="w-full rounded-xl bg-cus-bg  p-3 px-4 placeholder:font-light focus:outline-black"
-                type="text" />
 
-            <input placeholder="Password" class="w-full rounded-xl bg-cus-bg  p-3 px-4 placeholder:font-light focus:outline-black"
+        <form method="post" asp-controller="Auth" asp-action="Login" class="flex flex-col gap-4">
+            
+
+            <span asp-validation-for="Email" class="text-red-500"></span>
+            <input asp-for="Email" name="Email" placeholder="Email"
+                class="w-full rounded-xl bg-cus-bg  p-3 px-4 placeholder:font-light focus:outline-black" type="text" />
+
+
+            <span asp-validation-for="Password"  class="text-red-500"></span>
+            <input asp-for="Password" name="Password" placeholder="Password"
+                class="w-full rounded-xl bg-cus-bg  p-3 px-4 placeholder:font-light focus:outline-black"
                 type="password" />
 
-            <button class="mt-2 w-full rounded-xl bg-black/90 p-3 text-white">Login</button>
-        </div>
+            <button type="submit" class="mt-2 w-full rounded-xl bg-black/90 p-3 text-white">Login</button>
+        </form>
+
         <div class="mt-2 flex gap-1">
             <span>Don't have an account? </span>
             <a href="/auth/register" class="text-blue-500 cursor-pointer">sign up</a>

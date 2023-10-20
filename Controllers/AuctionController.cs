@@ -3,6 +3,7 @@ using AutoMapper;
 using DistLab2.Core;
 using DistLab2.Core.Interfaces;
 using DistLab2.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -11,6 +12,7 @@ namespace DistLab2.Controllers
     public class AuctionController : Controller
     {
         private readonly IMapper _mapper;
+        private readonly UserManager<IdentityUser> _userManager;
 
         private readonly List<AuctionVM> DUMMAY_ACTIONS = new()
             {
@@ -21,7 +23,7 @@ namespace DistLab2.Controllers
                     Description = "Painting, the expression of ideas and emotions, with the creation of certain aesthetic qualities, in a two-dimensional visual language. The elements of this language, its shapes, lines, colours, tones, and texture are used in various ways to produce sensations of volume, space, movement, and light on",
                     CreatedDate = DateTime.Now,
                     StartingPrice = 300,
-                    Username = "hamada@gmail.com",
+                    UserId = "hamada@gmail.com",
                     EndDate = new DateTime(2023, 12, 31, 23, 59, 59),
                     Bids = new()
                 },
@@ -31,17 +33,18 @@ namespace DistLab2.Controllers
                     Name = "Africa",
                     Description = "Painting, the expression of ideas and emotions, with the creation of certain aesthetic qualities, in a two-dimensional visual language. The elements of this language, its shapes, lines, colours, tones, and texture are used in various ways to produce sensations of volume, space, movement, and light on",
                     CreatedDate = new DateTime(2023, 11, 29, 23, 59, 59),
-                    Username = "marcus@gmail.com",
+                    UserId = "hamada@gmail.com",
                     StartingPrice = 500,
                     Bids = new()
                 },
             };
 
         private readonly IAuctionService _auctionService;
-        public AuctionController(IAuctionService auctionService, IMapper mapper)
+        public AuctionController(IAuctionService auctionService, IMapper mapper, UserManager<IdentityUser> userManager)
         {
             _auctionService = auctionService;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         // GET: AuctionsController
@@ -60,7 +63,6 @@ namespace DistLab2.Controllers
         public IActionResult MyAuctions()
         {
             var auctions = _auctionService.GetAll();
-
             IEnumerable<AuctionVM> auctionVMs = _mapper.Map<IEnumerable<AuctionVM>>(auctions);
             return View(auctionVMs);
 
@@ -76,10 +78,9 @@ namespace DistLab2.Controllers
         // GET: AuctionsController/Details/id
         public ActionResult Details(int id)
         {
-            var action = _auctionService.GetById(id);
+            var auction = _auctionService.GetById(id);
 
-            //var action = DUMMAY_ACTIONS.Find(p => p.Id == id);//dummy
-            return View(action);
+            return View(_mapper.Map<AuctionVM>(auction));
         }
 
         // GET: AuctionsController/Edit/id
@@ -92,7 +93,7 @@ namespace DistLab2.Controllers
 
         // POST: AuctionsController/Create
         [HttpPost]
-        public ActionResult Create(IFormCollection formData)
+        public async Task<ActionResult> Create(IFormCollection formData)
         {
             string name = formData["name"];
             string description = formData["description"];
@@ -104,15 +105,8 @@ namespace DistLab2.Controllers
             {
                 // Return an error view
             }
-            System.Console.WriteLine("-----------------------------");
-            System.Console.WriteLine("Createing auction with values: ");
-            System.Console.WriteLine("Name: " + name);
-            System.Console.WriteLine("Description: " + description);
-            System.Console.WriteLine("End date: " + endDate);
-            System.Console.WriteLine("Start price: " + startPrice);
-            System.Console.WriteLine("Image: " + "TODO");
-            System.Console.WriteLine("-----------------------------");
-
+         
+            IdentityUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
 
             Auction auction = new Auction
             {
@@ -120,7 +114,8 @@ namespace DistLab2.Controllers
                 Description = description,
                 StartingPrice = (decimal)startPrice,
                 CreatedDate = DateTime.Now,  
-                EndDate = endDate
+                EndDate = endDate,
+                UserId = currentUser.Email,
             };
 
             _auctionService.CreateAuction(auction);    
