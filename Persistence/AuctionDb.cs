@@ -21,7 +21,7 @@ namespace DistLab2.Persistence
 
 
         [Required]
-        public decimal StartingPrice { get; set; }
+        public int StartingPrice { get; set; }
        
         
         [Required]

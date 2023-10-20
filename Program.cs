@@ -7,13 +7,20 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//db med dependency injection
-// builder.Services.AddDbContext<AuctionDbContext>(options =>
-//     options.UseSqlServer(builder.Configuration.GetConnectionString("AuctionDbConnection")));
+//db med dependency injection Marcus
+ builder.Services.AddDbContext<AuctionDbContext>(options =>
+     options.UseSqlServer(builder.Configuration.GetConnectionString("AuctionDbConnection")));
 
-// Add DbContext registration
-builder.Services.AddDbContext<AuctionDbContext>(options => options.UseSqlite("Data Source=auctions.db"));
-builder.Services.AddDbContext<UserDbContext>(options => options.UseSqlite("Data Source=users.db"));
+builder.Services.AddDbContext<UserDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("UserDbConnection")));
+
+
+//builder.Services.AddScoped<IAuctionService, AuctionService>();
+
+
+// Add DbContext registration Hamada
+//builder.Services.AddDbContext<AuctionDbContext>(options => options.UseSqlite("Data Source=auctions.db"));
+//builder.Services.AddDbContext<UserDbContext>(options => options.UseSqlite("Data Source=users.db"));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
         .AddEntityFrameworkStores<UserDbContext>()
@@ -24,8 +31,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAuctionService, AuctionService>();
 builder.Services.AddScoped<IReposetory<AuctionDb>, Reposetory<AuctionDb>>();
-builder.Services.AddScoped<IReposetory<UserDb>, Reposetory<UserDb>>();
-builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IReposetory<BidDb>, Reposetory<BidDb>>();
+
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddScoped<UserManager<IdentityUser>>();

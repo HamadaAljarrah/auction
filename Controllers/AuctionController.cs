@@ -2,6 +2,7 @@ using System.Globalization;
 using AutoMapper;
 using DistLab2.Core;
 using DistLab2.Core.Interfaces;
+using DistLab2.Persistence;
 using DistLab2.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,30 +15,7 @@ namespace DistLab2.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<IdentityUser> _userManager;
 
-        private readonly List<AuctionVM> DUMMAY_ACTIONS = new()
-            {
-                new AuctionVM
-                {
-                    Id = 0,
-                    Name = "Monalisa",
-                    Description = "Painting, the expression of ideas and emotions, with the creation of certain aesthetic qualities, in a two-dimensional visual language. The elements of this language, its shapes, lines, colours, tones, and texture are used in various ways to produce sensations of volume, space, movement, and light on",
-                    CreatedDate = DateTime.Now,
-                    StartingPrice = 300,
-                    UserId = "hamada@gmail.com",
-                    EndDate = new DateTime(2023, 12, 31, 23, 59, 59),
-                    Bids = new()
-                },
-                 new AuctionVM
-                {
-                    Id = 1,
-                    Name = "Africa",
-                    Description = "Painting, the expression of ideas and emotions, with the creation of certain aesthetic qualities, in a two-dimensional visual language. The elements of this language, its shapes, lines, colours, tones, and texture are used in various ways to produce sensations of volume, space, movement, and light on",
-                    CreatedDate = new DateTime(2023, 11, 29, 23, 59, 59),
-                    UserId = "hamada@gmail.com",
-                    StartingPrice = 500,
-                    Bids = new()
-                },
-            };
+     
 
         private readonly IAuctionService _auctionService;
         public AuctionController(IAuctionService auctionService, IMapper mapper, UserManager<IdentityUser> userManager)
@@ -79,6 +57,8 @@ namespace DistLab2.Controllers
         public ActionResult Details(int id)
         {
             var auction = _auctionService.GetById(id);
+            Console.WriteLine("in details : id"+id);
+            Console.WriteLine("in details : name " + auction.Name);
 
             return View(_mapper.Map<AuctionVM>(auction));
         }
@@ -112,7 +92,7 @@ namespace DistLab2.Controllers
             {
                 Name = name,
                 Description = description,
-                StartingPrice = (decimal)startPrice,
+                StartingPrice = (int)startPrice,
                 CreatedDate = DateTime.Now,  
                 EndDate = endDate,
                 UserId = currentUser.Email,
@@ -137,7 +117,30 @@ namespace DistLab2.Controllers
         public ActionResult Delete(int id)
         {
             Console.WriteLine("Deleting auction with ID: " + id);
-            return View("MyAuctions", DUMMAY_ACTIONS);
+            //return View("MyAuctions", DUMMAY_ACTIONS);
+            return View();//send redirect
+
+        }
+        [HttpPost]
+        public IActionResult PlaceBid(int Id,int Amount)
+        {
+            Console.WriteLine(Id);
+            Console.WriteLine(Amount);
+            Console.WriteLine("_____");
+            // Get the auction by its ID
+            var auction = _auctionService.GetById(Id);
+
+            if (auction == null)
+            {
+                // Handle the case where the auction with the given ID does not exist
+                return NotFound();
+            }
+
+            // Place the bid
+            _auctionService.PlaceBid(auction.Id, Amount);
+
+            // Redirect to the auction details page
+            return RedirectToAction("Details", new { Id });
         }
     }
 }

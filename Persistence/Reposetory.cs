@@ -22,6 +22,8 @@ namespace DistLab2.Persistence
 
         public T GetById(int id)
         {
+            Console.WriteLine("id :"+id);
+            var a = _dbSet.Find(id);
             return _dbSet.Find(id);
         }
 

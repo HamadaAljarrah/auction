@@ -7,7 +7,7 @@ namespace DistLab2.Core
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public decimal StartingPrice {  get; set; }
+        public int StartingPrice {  get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime EndDate { get; set; }
         

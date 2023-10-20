@@ -8,6 +8,6 @@
         public void CreateAuction(Auction auction);
        public void Remove(Auction auction);
 
-
+        public void PlaceBid(int auctionId, int bidAmount);
     }
 }
