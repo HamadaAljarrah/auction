@@ -17,7 +17,7 @@ namespace DistLab2.Core
 
         public IEnumerable<Bid> Bids { get; set; } = new List<Bid>();
 
-        public byte[] Image { get; set; }
+        //public byte[] Image { get; set; }
         public Auction(){}
 
         public override string ToString()

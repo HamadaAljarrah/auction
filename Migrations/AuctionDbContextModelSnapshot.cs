@@ -40,10 +40,6 @@ namespace DistLab2.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte[]>("Image")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(128)
@@ -60,7 +56,7 @@ namespace DistLab2.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Auctions");
+                    b.ToTable("Auctions", (string)null);
                 });
 
             modelBuilder.Entity("DistLab2.Persistence.BidDb", b =>
@@ -90,7 +86,7 @@ namespace DistLab2.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Bids");
+                    b.ToTable("Bids", (string)null);
                 });
 
             modelBuilder.Entity("DistLab2.Persistence.UserDb", b =>
@@ -104,7 +100,7 @@ namespace DistLab2.Migrations
 
                     b.HasKey("Email");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("DistLab2.Persistence.AuctionDb", b =>
@@ -129,6 +125,7 @@ namespace DistLab2.Migrations
                     b.HasOne("DistLab2.Persistence.UserDb", "User")
                         .WithMany("Bids")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Auction");
