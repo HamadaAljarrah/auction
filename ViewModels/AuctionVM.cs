@@ -1,4 +1,5 @@
 ﻿using DistLab2.Core;
+using DistLab2.Persistence;
 
 namespace DistLab2.ViewModels
 {
@@ -15,7 +16,9 @@ namespace DistLab2.ViewModels
         public string UserId { get; set; }
 
         public List<BidVM> Bids = new();
-        
+        //public virtual IEnumerable<BidVM> Bids { get; set; } = new List<BidVM>();
+
+
         public static AuctionVM FromAuction(Auction auction)
         {
             return new AuctionVM

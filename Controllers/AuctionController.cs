@@ -59,7 +59,18 @@ namespace DistLab2.Controllers
             var auction = _auctionService.GetById(id);
             Console.WriteLine("in details : id"+id);
             Console.WriteLine("in details : name " + auction.Name);
-
+            if (auction.Bids != null)
+            {
+                Console.WriteLine("Bids found:");
+                foreach (var bid in auction.Bids)
+                {
+                    Console.WriteLine("Bid from controller: " + bid.Id);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No bids found for this auction.");
+            }
             return View(_mapper.Map<AuctionVM>(auction));
         }
 
