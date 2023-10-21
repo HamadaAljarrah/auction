@@ -29,8 +29,6 @@ namespace DistLab2.Controllers
         public IActionResult Index()
         {
             var auctions = _auctionService.GetAll();
-      
-
             IEnumerable<AuctionVM> auctionVMs = _mapper.Map<IEnumerable<AuctionVM>>(auctions);
 
             return View(auctionVMs);
@@ -52,11 +50,10 @@ namespace DistLab2.Controllers
             return View();
         }
 
-
         // GET: AuctionsController/Details/id
         public ActionResult Details(int id)
         {
-            var auction = _auctionService.GetById(id);
+                var auction = _auctionService.GetById(id);
             Console.WriteLine("in details : id"+id);
             Console.WriteLine("in details : name " + auction.Name);
             if (auction.Bids != null)
@@ -76,11 +73,9 @@ namespace DistLab2.Controllers
 
         // GET: AuctionsController/Edit/id
         public ActionResult Edit(int id)
-        {
+        {   
             return View(id);
         }
-
-
 
         // POST: AuctionsController/Create
         [HttpPost]
@@ -112,7 +107,6 @@ namespace DistLab2.Controllers
             _auctionService.CreateAuction(auction);    
             return View();
         }
-
 
         // POST: AuctionsController/Edit/id
         [HttpPost]

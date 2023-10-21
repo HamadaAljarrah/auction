@@ -7,14 +7,13 @@ namespace DistLab2.Persistence
     public class Reposetory<T> : IReposetory<T> where T : class
     {
         private readonly AuctionDbContext _context;
-        private readonly DbSet<T> _dbSet;
-
+        //private readonly DbSet<T> _dbSet;
+        protected readonly DbSet<T> _dbSet;
         public Reposetory(AuctionDbContext context)
         {
             _context = context;
             _dbSet = context.Set<T>();
         }
-        //läg en konstorutor per context typ så en för user osv
         public IEnumerable<T> GetAll()
         {
             return _dbSet.ToList();
@@ -47,6 +46,10 @@ namespace DistLab2.Persistence
         public void Remove(T entity)
         {
             _dbSet.Remove(entity);
+        }
+        public IEnumerable<T> ExecuteQuery(string query, params object[] parameters)
+        {
+            return _dbSet.FromSqlRaw(query, parameters).ToList();
         }
     }
 }

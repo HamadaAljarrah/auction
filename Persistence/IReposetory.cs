@@ -11,5 +11,7 @@ namespace DistLab2.Persistence
         void Update(T entity);
         void Remove(T entity);
 
+        public IEnumerable<T> ExecuteQuery(string query, params object[] parameters);
+
     }
 }

@@ -9,15 +9,24 @@ using AutoMapper;
 using DistLab2.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace DistLab2.Core
 {
     public class AuctionService : IAuctionService
     {
-        private readonly IReposetory<AuctionDb> _auctionReposetory;
+        //private readonly IReposetory<AuctionDb> _auctionReposetory;
+        private readonly IAuctionRepositroy _auctionReposetory;
+
         private readonly IReposetory<BidDb> _bidReposetory;
 
         private readonly IMapper  _mapper;
-        public AuctionService(IReposetory<AuctionDb> auctinReposetory, IReposetory<BidDb> bidReposetory ,IMapper mapper) {
+        //public AuctionService(IReposetory<AuctionDb> auctinReposetory, IReposetory<BidDb> bidReposetory ,IMapper mapper) {
+        //    _auctionReposetory = auctinReposetory;
+        //    _bidReposetory = bidReposetory;
+        //    _mapper = mapper; //old
+        //}
+        public AuctionService(IAuctionRepositroy auctinReposetory, IReposetory<BidDb> bidReposetory, IMapper mapper)
+        {
             _auctionReposetory = auctinReposetory;
             _bidReposetory = bidReposetory;
             _mapper = mapper;
@@ -44,7 +53,7 @@ namespace DistLab2.Core
                                    $"End Date: {auction.EndDate}, User Id: {auction.UserId},");
                 if (auction.Bids != null)
                 {
-                    Console.WriteLine("Bids found in service:");
+                    Console.WriteLine("Bids found get all in service:");
                     foreach (var bid in auction.Bids)
                     {
                         Console.WriteLine("Bid from Service: " + bid.Id);
@@ -63,42 +72,40 @@ namespace DistLab2.Core
         {
             throw new NotImplementedException();
         }
-        //public Auction GetById(int id)
-        //{
-        //    AuctionDb auctionDb = _auctionReposetory.GetById(id).Include(a => a.Bids)
-        //        .FirstOrDefault(a => a.Id == id);
-
-        //    if (auctionDb != null)
-        //    {
-        //        return _mapper.Map<Auction>(auctionDb);
-        //    }
-
-        //    return null; // Return null or handle the case when the auction is not found.
-        //}
 
 
-        public Auction GetById(int id)
+
+
+
+        public Auction GetById(int id) //todo test
         {
             AuctionDb auctionDb = _auctionReposetory.GetById(id);
-            Auction auction = _mapper.Map<Auction>(auctionDb);
-            return auction;
+
+            if (auctionDb.Bids != null)
+            {
+                Console.WriteLine("Bids found:");
+                foreach (var bid in auctionDb.Bids)
+                {
+                    Console.WriteLine("Bid from Service: " + bid.Id);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No bids found for this auction.");
+            }
+
+            if (auctionDb != null)
+            {
+                return _mapper.Map<Auction>(auctionDb);
+            }
+
+            return null; // Handle the case when the auction is not found.
         }
 
-        //public Auction GetById(int id)
-        //{
-        //    AuctionDb auctionDb = _auctionReposetory.GetAll()
-        //        .Include(a => a.Bids) // Include bids in the query
-        //        .SingleOrDefault(a => a.Id == id);
 
-        //    if (auctionDb == null)
-        //    {
-        //        return null;
-        //    }
 
-        //    Auction auction = _mapper.Map<Auction>(auctionDb);
-        //    Console.WriteLine("in service 2: name " + auction.Name);
-        //    return auction;
-        //}
+
+
         public void PlaceBid(int auctionId, int bidAmount)
         {
             AuctionDb auction = _auctionReposetory.GetById(auctionId);

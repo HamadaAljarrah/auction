@@ -18,7 +18,7 @@ namespace DistLab2.ViewModels
         public List<BidVM> Bids = new();
         //public virtual IEnumerable<BidVM> Bids { get; set; } = new List<BidVM>();
 
-
+        public byte[] Image { get; set; }
         public static AuctionVM FromAuction(Auction auction)
         {
             return new AuctionVM

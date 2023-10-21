@@ -15,16 +15,23 @@ namespace DistLab2.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BidDb>()
-            .HasOne(b => b.Auction)
-            .WithMany(a => a.Bids)
-            .HasForeignKey(b => b.AuctionId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasOne(b => b.User)
+            .WithMany(u => u.Bids)
+            .HasForeignKey(b => b.UserId)
+            .OnDelete(DeleteBehavior.ClientSetNull); // Remove cascading action
 
-            modelBuilder.Entity<BidDb>()
-                .HasOne(b => b.User)
-                .WithMany(u => u.Bids)
-                .HasForeignKey(b => b.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+
+            //modelBuilder.Entity<BidDb>()
+            //.HasOne(b => b.Auction)
+            //.WithMany(a => a.Bids)
+            //.HasForeignKey(b => b.AuctionId)
+            //.OnDelete(DeleteBehavior.Cascade);
+
+            //modelBuilder.Entity<BidDb>()
+            //    .HasOne(b => b.User)
+            //    .WithMany(u => u.Bids)
+            //    .HasForeignKey(b => b.UserId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
         }
 

@@ -11,7 +11,12 @@ namespace DistLab2
         {
             CreateMap<AuctionDb, Auction>().ReverseMap();
             CreateMap<AuctionVM, Auction>().ReverseMap();
-            CreateMap<Auction, AuctionVM>().ReverseMap();
+            CreateMap<Auction, AuctionVM>().ReverseMap();//tod remove extra
+
+            CreateMap<BidDb, Bid>().ReverseMap();
+            CreateMap<BidVM, Bid>().ReverseMap();
+            CreateMap<Bid, BidVM>().ReverseMap();//todo remove extra
+
 
             CreateMap<RegisterVM, User>().ReverseMap();
             CreateMap<User, UserDb>().ReverseMap();

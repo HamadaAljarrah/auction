@@ -17,7 +17,6 @@ namespace DistLab2.Persistence
         public virtual List<AuctionDb> Auctions { get; set; } = new();//todo byt till IEnumereble
         public virtual List<BidDb> Bids { get; set; } = new();//todo byt till IEnumereble
 
-
         public UserDb() { }
     }
 }

@@ -30,7 +30,9 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAuctionService, AuctionService>();
-builder.Services.AddScoped<IReposetory<AuctionDb>, Reposetory<AuctionDb>>();
+//builder.Services.AddScoped<IReposetory<AuctionDb>, Reposetory<AuctionDb>>(); //old
+builder.Services.AddScoped<IAuctionRepositroy, AuctionReposetory>(); 
+
 builder.Services.AddScoped<IReposetory<BidDb>, Reposetory<BidDb>>();
 
 builder.Services.AddScoped<IUserService, UserService>();//todo testa om den ska va här

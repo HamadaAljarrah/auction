@@ -15,7 +15,9 @@ namespace DistLab2.Core
         public string UserId { get; set; }
         public User User { get; set; }
 
-        public IEnumerable<Bid> Bids { get; set; } = new List<Bid>();   
+        public IEnumerable<Bid> Bids { get; set; } = new List<Bid>();
+
+        public byte[] Image { get; set; }
         public Auction(){}
 
         public override string ToString()

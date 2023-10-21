@@ -47,7 +47,8 @@ namespace DistLab2.Persistence
         [ForeignKey("UserId")]
         public string UserId { get; set; }
         public virtual UserDb User { get; set; }
-
+       
+        public byte[] Image { get; set; }
 
     }
 }
