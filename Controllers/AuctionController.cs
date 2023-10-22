@@ -1,4 +1,5 @@
 using AutoMapper;
+using Demo2.Filter;
 using DistLab2.Core;
 using DistLab2.Core.Error;
 using DistLab2.Core.Interfaces;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DistLab2.Controllers
 {
+     [ServiceFilter(typeof(AuthFilter))]
     public class AuctionController : Controller
     {
         private readonly IMapper _mapper;

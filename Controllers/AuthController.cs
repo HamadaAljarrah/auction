@@ -2,6 +2,7 @@ using AutoMapper;
 using DistLab2.Core;
 using DistLab2.Core.Interfaces;
 using DistLab2.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,13 +11,13 @@ namespace DistLab2.Controllers
     public class AuthController : Controller
     {
 
-       
+
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IUserService userService,  IMapper mapper)
+        public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IUserService userService, IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -27,11 +28,19 @@ namespace DistLab2.Controllers
 
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
         public IActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -91,13 +100,14 @@ namespace DistLab2.Controllers
             return View();
         }
 
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 
-        
+
 
     }
 }
