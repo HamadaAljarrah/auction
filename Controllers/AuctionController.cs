@@ -1,8 +1,7 @@
-using System.Globalization;
 using AutoMapper;
 using DistLab2.Core;
+using DistLab2.Core.Error;
 using DistLab2.Core.Interfaces;
-using DistLab2.Persistence;
 using DistLab2.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +13,8 @@ namespace DistLab2.Controllers
     {
         private readonly IMapper _mapper;
         private readonly UserManager<IdentityUser> _userManager;
-
-     
-
         private readonly IAuctionService _auctionService;
+
         public AuctionController(IAuctionService auctionService, IMapper mapper, UserManager<IdentityUser> userManager)
         {
             _auctionService = auctionService;
@@ -28,19 +25,36 @@ namespace DistLab2.Controllers
         // GET: AuctionsController
         public IActionResult Index()
         {
-            var auctions = _auctionService.GetAll();
-            IEnumerable<AuctionVM> auctionVMs = _mapper.Map<IEnumerable<AuctionVM>>(auctions);
-
-            return View(auctionVMs);
+            try
+            {
+                var auctions = _auctionService.GetUnownedAuctions(User.Identity.Name);
+                var viewAuction = _mapper.Map<IEnumerable<AuctionVM>>(auctions);
+                return View(viewAuction);
+            }
+            catch (ServiceException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return View("Error", ex.Message);
+            }
 
         }
+
+
 
         // GET: AuctionsController/Auction/MyAuctions
         public IActionResult MyAuctions()
         {
-            var auctions = _auctionService.GetAll();
-            IEnumerable<AuctionVM> auctionVMs = _mapper.Map<IEnumerable<AuctionVM>>(auctions);
-            return View(auctionVMs);
+            try
+            {
+                var myacutions = _auctionService.GetUserAuctions(User.Identity.Name);
+                var viewAuction = _mapper.Map<IEnumerable<AuctionVM>>(myacutions);
+                return View(viewAuction);
+            }
+            catch (ServiceException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return View("Error", ex.Message);
+            }
 
         }
 
@@ -53,8 +67,8 @@ namespace DistLab2.Controllers
         // GET: AuctionsController/Details/id
         public ActionResult Details(int id)
         {
-                var auction = _auctionService.GetById(id);
-            Console.WriteLine("in details : id"+id);
+            var auction = _auctionService.GetAuctionWithBids(id);
+            Console.WriteLine("in details : id" + id);
             Console.WriteLine("in details : name " + auction.Name);
             if (auction.Bids != null)
             {
@@ -73,31 +87,21 @@ namespace DistLab2.Controllers
 
         // GET: AuctionsController/Edit/id
         public ActionResult Edit(int id)
-        {   
+        {
             return View(id);
         }
         // POST: AuctionsController/Create
         [HttpPost]
-        public async Task<ActionResult> Create(IFormCollection formData, IFormFile image)
+        public async Task<ActionResult> Create(string name, string description, DateTime endDate, int startPrice, IFormFile image)
         {
-            string name = formData["name"];
-            string description = formData["description"];
-            if (!DateTime.TryParse(formData["endDate"], out DateTime endDate))
-            {
-                // Return an error view
-            }
-            if (!double.TryParse(formData["startPrice"], NumberStyles.Float, CultureInfo.InvariantCulture, out double startPrice))
-            {
-                // Return an error view
-            }
 
-            IdentityUser currentUser = await _userManager.GetUserAsync(HttpContext.User);//todo gör så på auction service för user
-            
-            Auction auction = new Auction
+
+            IdentityUser currentUser = await _userManager.GetUserAsync(HttpContext.User);//todo gï¿½r sï¿½ pï¿½ auction service fï¿½r user
+            AuctionVM auction = new AuctionVM()
             {
                 Name = name,
                 Description = description,
-                StartingPrice = (int)startPrice,
+                StartingPrice = startPrice,
                 CreatedDate = DateTime.Now,
                 EndDate = endDate,
                 UserId = currentUser.Email,
@@ -105,71 +109,59 @@ namespace DistLab2.Controllers
 
             if (image != null && image.Length > 0)
             {
-                using (var stream = new MemoryStream())
-                {
-                    await image.CopyToAsync(stream);
-                    // Now you have the image data in stream.ToArray()
-                    auction.Image = stream.ToArray();
-                }
+                using var stream = new MemoryStream();
+                await image.CopyToAsync(stream);
+                // Now you have the image data in stream.ToArray()
+                auction.Image = stream.ToArray();
             }
-            _auctionService.CreateAuction(auction);
-            return View();
+            _auctionService.CreateAuction(_mapper.Map<Auction>(auction));
+            return RedirectToAction("MyAuctions");
         }
-        //// POST: AuctionsController/Create
-        //[HttpPost]
-        //public async Task<ActionResult> Create(IFormCollection formData)
-        //{
-        //    string name = formData["name"];
-        //    string description = formData["description"];
-        //    if (!DateTime.TryParse(formData["endDate"], out DateTime endDate))
-        //    {
-        //        // Return an error view
-        //    }
-        //    if (!double.TryParse(formData["startPrice"], NumberStyles.Float, CultureInfo.InvariantCulture, out double startPrice))
-        //    {
-        //        // Return an error view
-        //    }
 
-        //    IdentityUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
-
-        //    Auction auction = new Auction
-        //    {
-        //        Name = name,
-        //        Description = description,
-        //        StartingPrice = (int)startPrice,
-        //        CreatedDate = DateTime.Now,  
-        //        EndDate = endDate,
-        //        UserId = currentUser.Email,
-        //    };
-
-        //    _auctionService.CreateAuction(auction);    
-        //    return View();
-        //}
 
         // POST: AuctionsController/Edit/id
         [HttpPost]
-        public ActionResult Edit(int id, IFormCollection formData)
+        public ActionResult Edit(string description, int id)
         {
-            string description = formData["description"];
-            Console.WriteLine("Editing auction with ID: " + id+ "\nNew description: " + description);
-            return View();
+
+            try
+            {
+                _auctionService.UpdateDescription(description, id);
+                return RedirectToAction("MyAuctions");
+            }
+            catch (ServiceException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return View("Error", ex.Message);
+            }
+
         }
 
-         // POST: AuctionsController/Delete/id
+        // POST: AuctionsController/Delete/id
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            Console.WriteLine("Deleting auction with ID: " + id);
-            //return View("MyAuctions", DUMMAY_ACTIONS);
-            return View();//send redirect
+             try
+            {
+                _auctionService.DeleteAuction(id);
+                return RedirectToAction("MyAuctions");
+
+            }
+            catch (ServiceException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return View("Error", ex.Message);
+            }
 
         }
         [HttpPost]
-        public IActionResult PlaceBid(int Id,int Amount)
+        public IActionResult PlaceBid(int Id, int Amount)
         {
             Console.WriteLine(Id);
             Console.WriteLine(Amount);
             Console.WriteLine("_____");
+
+         
             // Get the auction by its ID
             var auction = _auctionService.GetById(Id);
 
@@ -180,10 +172,64 @@ namespace DistLab2.Controllers
             }
 
             // Place the bid
-            _auctionService.PlaceBid(auction.Id, Amount);
-
+            BidVM bid = new() { Amount = Amount, AuctionId = Id, UserId = User.Identity.Name };
+            _auctionService.PlaceBid(_mapper.Map<Bid>(bid));
             // Redirect to the auction details page
             return RedirectToAction("Details", new { Id });
         }
+
+
+        // GET: AuctionsController/Auction/MyAuctions
+        public IActionResult UserAuctions()
+        {
+
+            try
+            {
+                var myacutions = _auctionService.GetUserAuctions(User.Identity.Name);
+                var viewAuction = _mapper.Map<IEnumerable<AuctionVM>>(myacutions);
+                return View(viewAuction);
+            }
+            catch (ServiceException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return View("Error", ex.Message);
+            }
+
+        }
+        // GET: AuctionsController/Auction/MyAuctions
+        public IActionResult AuctionUserWon()
+        {
+
+            try
+            {
+                var myacutions = _auctionService.GetAuctionsUserWon(User.Identity.Name);
+                var viewAuction = _mapper.Map<IEnumerable<AuctionVM>>(myacutions);
+                return View("Index", viewAuction);
+            }
+            catch (ServiceException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return View("Error", ex.Message);
+            }
+
+        }
+        // GET: AuctionsController/Auction/MyAuctions
+        public IActionResult AuctionUserBidIn()
+        {
+
+            try
+            {
+                var myacutions = _auctionService.GetAuctionsUserBidIn(User.Identity.Name);
+                var viewAuction = _mapper.Map<IEnumerable<AuctionVM>>(myacutions);
+                return View("Index", viewAuction);
+            }
+            catch (ServiceException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return View("Error", ex.Message);
+            }
+
+        }
+
     }
 }

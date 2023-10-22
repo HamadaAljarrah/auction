@@ -5,14 +5,31 @@
 }
 
 @{
-  TimeSpan timeLeft = Model.EndDate - DateTime.Now;//todo fix bug when null
+  TimeSpan timeLeft = Model.EndDate - DateTime.Now;
+  bool expired = false;
+  if (Model.EndDate < DateTime.Now)
+  {
+    expired = true;
+  }
+
   decimal hieghestBid = Model.Bids.Count > 0 ? Model.Bids.Max(b => b.Amount) : 0;
+  Model.Bids = Model.Bids.OrderByDescending(b => b.Amount).ToList();
 }
 
 <div class="py-4 h-[85vh]">
   <div class="grid-parent h-full">
     <div class="grid-side rounded-3xl bg-white p-8">
-      <img src="https://mynewart.se/wp-content/uploads/2016/06/Mona-Lisa.jpg" alt="" class="mb-4 h-1/2 w-full rounded-xl object-cover object-top" />
+      @if (Model.Image != null)
+      {
+        <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Image)" alt=""
+          class="mb-4 h-1/2 w-full rounded-xl object-cover object-center" />
+      }
+      else
+      {
+        <img src="https://mynewart.se/wp-content/uploads/2016/06/Mona-Lisa.jpg" alt=""
+          class="mb-4 h-1/2 w-full rounded-xl object-cover object-top" />
+      }
+
       <h1 class="text-3xl font-bold mb-2">@Model.Name</h1>
       <p>@Model.Description</p>
     </div>
@@ -40,10 +57,41 @@
           <p class="text-sm text-black/60">Highest Bid</p>
           <h3 class="text-3xl font-bold">$@hieghestBid</h3>
         </div>
-        <div>
-          <p class="text-sm text-black/60">Time left</p>
-          <h3 class="text-3xl font-bold">@($"{timeLeft.Days}d:{timeLeft.Hours}h")</h3>
-        </div>
+        @if (expired)
+        {
+          <div>
+            <p class="text-sm text-black/60">Time left</p>
+            <h3 class="text-3xl font-bold">Expired</h3>
+          </div>
+        }
+        else
+        {
+          <div>
+            <p class="text-sm text-black/60">Time left</p>
+            @* <h3 class="text-3xl font-bold">@($"{timeLeft.Days}d:{timeLeft.Hours}h")</h3> *@
+            <div class="flex gap-4">
+              <div class="flex flex-col items-center justify-center">
+                <span class="text-2xl font-bold" id="days"></span>
+                <span class="text-[10px] text-black/60">DAYS</span>
+              </div>
+              <div class="flex flex-col items-center justify-center">
+                <span class="text-2xl font-bold" id="hours"></span>
+                <span class="text-[10px] text-black/6">HOURS</span>
+              </div>
+              <div class="flex flex-col items-center justify-center">
+                <span class="text-2xl font-bold" id="minutes"></span>
+                <span class="text-[10px] text-black/6">MINUTES</span>
+              </div>
+              <div class="flex flex-col items-center justify-center">
+                <span class="text-2xl font-bold" id="seconds"></span>
+                <span class="text-[10px] text-black/6">SECONDS</span>
+              </div>
+              @* <span class="text-2xl font-bold" id="hours"></span>
+            <span class="text-2xl font-bold" id="minutes"></span>
+            <span class="text-2xl font-bold" id="seconds"></span> *@
+            </div>
+          </div>
+        }
       </div>
     </div>
     <div class="grid-body relative flex flex-col rounded-3xl bg-white p-8">
@@ -52,22 +100,62 @@
         <div class="flex flex-col place-self-stretch">
           @foreach (BidVM bid in Model.Bids)
           {
-            <div class="mb-1 flex items-center justify-between border-b-[0.5px] py-3">
-              <div class="flex flex-col items-start gap-2">
-                <h3 class="text-xl font-semibold">@bid.UserId</h3>
+            <div class="mb-1 flex items-center justify-between border-b-[0.5px] py-2">
+              <div class="flex flex-col items-start gap-0">
+                <h3 class="text-md">@bid.UserId</h3>
                 <p class="text-[10px] text-black/50">@bid.CreatedTime</p>
               </div>
-              <p class="text-lg">$@bid.Amount</p>
+              <p class="text-lg font-semibold">$@bid.Amount</p>
             </div>
           }
         </div>
       </div>
-            <form asp-action="PlaceBid" asp-controller="Auction" method="post" class="flex gap-2 pt-3">
-                <input  name="Amount" placeholder="Amount"
-          class="flex-grow rounded-xl bg-cus-bg p-3 px-4 placeholder:font-light focus:outline-black" type="number" />
-          <input name="Id" value="@Model.Id" type="hidden" />
-        <button type="submit" class="rounded-xl bg-black/90 px-4 py-2 text-white">Place bid</button>
-      </form>
+      @if (User.Identity.Name != Model.UserId)
+      {
+        <form method="post" asp-action="PlaceBid" asp-controller="Auction" class="flex gap-2 pt-3">
+          <input type="hidden" value="@Model.Id" name="id" />
+          <input type="hidden" value="@Model.UserId" name="email" />
+          <input name="amount" placeholder="Amount"
+            class="flex-grow rounded-xl bg-cus-bg p-3 px-4 placeholder:font-light focus:outline-black" type="number" />
+          <button type="submit" class="rounded-xl bg-black/90 px-4 py-2 text-white">Place bid</button>
+        </form>
+      }
     </div>
   </div>
 </div>
+
+
+@{
+  DateTime dateTime = Model.EndDate; // For example, getting the current UTC time
+  DateTimeOffset dateTimeOffset = new DateTimeOffset(dateTime);
+  long millisecondsSinceEpoch = dateTimeOffset.ToUnixTimeMilliseconds();
+}
+<script>
+  // Initialize the target time for the countdown (for example, 5 days from now)
+  const targetTime = @millisecondsSinceEpoch;
+
+  // Function to update the countdown timer
+  function updateCountdown() {
+    const currentTime = new Date().getTime();
+    const timeRemaining = targetTime - currentTime;
+
+    // Calculate days, hours, minutes, and seconds remaining
+    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+    // Update the HTML elements with the calculated time components
+    document.getElementById("days").innerHTML = days;
+    document.getElementById("hours").innerHTML = hours;
+    document.getElementById("minutes").innerHTML = minutes;
+    document.getElementById("seconds").innerHTML = seconds;
+
+    // Update the countdown timer every second
+    setTimeout(updateCountdown, 1000);
+  }
+
+  // Start the countdown timer
+  updateCountdown();
+
+</script>

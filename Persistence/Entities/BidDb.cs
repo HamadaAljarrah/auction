@@ -30,14 +30,16 @@ namespace DistLab2.Persistence
         //public UserDb User { get; set; }
         // Foreign key for the auction
      
-        [ForeignKey("AuctionId")]
+        [ForeignKey("Auction")]
         public int AuctionId { get; set; }
         public virtual AuctionDb Auction { get; set; }
 
-        // Foreign key for the user
-        [ForeignKey("UserId")]
-        public virtual UserDb User { get; set; }
+
+
+        [ForeignKey("User")]
         public string UserId { get; set; }
+        public virtual UserDb User { get; set; }
+  
     }
 
 }

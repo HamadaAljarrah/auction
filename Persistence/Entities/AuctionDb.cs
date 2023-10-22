@@ -35,7 +35,7 @@ namespace DistLab2.Persistence
         [DataType(DataType.DateTime)] 
         public DateTime EndDate { get; set; }
         
-        public IEnumerable<BidDb> Bids{ get; set; }=new List<BidDb>();//todo tog bort virtual för lazy loading
+        public List<BidDb> Bids{ get; set; }=new List<BidDb>();//todo tog bort virtual för lazy loading
 
 
         //// Relation to UsertDb and virtuell for lazyloading
@@ -44,11 +44,16 @@ namespace DistLab2.Persistence
         //public UserDb User {get;set;}
 
         // Foreign key for the user
-        [ForeignKey("UserId")]
+        [ForeignKey("User")]
         public string UserId { get; set; }
         public virtual UserDb User { get; set; }
        
         public byte[] Image { get; set; }
+
+           public string ToString(){
+            return $"Auction = [Id: {Id}, Name: {Name}, Username:{UserId}, StartAmount: " +
+            $"{StartingPrice}, CreatedDate: {CreatedDate}, EndDate: {EndDate}]";
+        }
 
     }
 }

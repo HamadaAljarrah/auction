@@ -1,0 +1,15 @@
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="flex gap-4">
+    <a asp-controller="Auction" asp-action="Index">Auctions</a>
+    <a asp-controller="Auction" asp-action="MyAuctions">My Auctions</a>
+    <a asp-controller="Auction" asp-action="AuctionUserBidIn">Attended auctions</a>
+    <a asp-controller="Auction" asp-action="AuctionUserWon">Winning auctions</a>
+
+</div>
+}
+
