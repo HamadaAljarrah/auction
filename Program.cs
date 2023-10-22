@@ -2,6 +2,7 @@ using DistLab2;
 using DistLab2.Core;
 using DistLab2.Core.Interfaces;
 using DistLab2.Persistence;
+using Filter;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Repository;
@@ -39,7 +40,7 @@ builder.Services.AddScoped<IUserService, UserService>();//todo testa om den ska 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddScoped<UserManager<IdentityUser>>();
-
+builder.Services.AddScoped<AuthFilter>();
 
 var app = builder.Build();
 

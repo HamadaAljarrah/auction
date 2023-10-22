@@ -1,5 +1,5 @@
 using AutoMapper;
-using Demo2.Filter;
+using Filter;
 using DistLab2.Core;
 using DistLab2.Core.Error;
 using DistLab2.Core.Interfaces;

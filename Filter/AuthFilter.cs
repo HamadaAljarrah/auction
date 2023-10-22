@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Demo2.Filter
+namespace Filter
 {
     public class AuthFilter : IAuthorizationFilter
     {
