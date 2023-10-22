@@ -121,7 +121,8 @@ namespace DistLab2.Core
                 return;
             }
 
-            BidDb newBid = new BidDb //todo läg dynamic id
+            //IdentityUser currentUser = await _userManager.GetUserAsync(HttpContext.User);//todo gör så på auction service för user
+            BidDb newBid = new BidDb //todo läg dynamic id 
             {
                 Amount = bidAmount,
                 AuctionId= auctionId,

@@ -76,10 +76,9 @@ namespace DistLab2.Controllers
         {   
             return View(id);
         }
-
         // POST: AuctionsController/Create
         [HttpPost]
-        public async Task<ActionResult> Create(IFormCollection formData)
+        public async Task<ActionResult> Create(IFormCollection formData, IFormFile image)
         {
             string name = formData["name"];
             string description = formData["description"];
@@ -91,22 +90,61 @@ namespace DistLab2.Controllers
             {
                 // Return an error view
             }
-         
-            IdentityUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
 
+            IdentityUser currentUser = await _userManager.GetUserAsync(HttpContext.User);//todo gör så på auction service för user
+            
             Auction auction = new Auction
             {
                 Name = name,
                 Description = description,
                 StartingPrice = (int)startPrice,
-                CreatedDate = DateTime.Now,  
+                CreatedDate = DateTime.Now,
                 EndDate = endDate,
                 UserId = currentUser.Email,
             };
 
-            _auctionService.CreateAuction(auction);    
+            if (image != null && image.Length > 0)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await image.CopyToAsync(stream);
+                    // Now you have the image data in stream.ToArray()
+                    auction.Image = stream.ToArray();
+                }
+            }
+            _auctionService.CreateAuction(auction);
             return View();
         }
+        //// POST: AuctionsController/Create
+        //[HttpPost]
+        //public async Task<ActionResult> Create(IFormCollection formData)
+        //{
+        //    string name = formData["name"];
+        //    string description = formData["description"];
+        //    if (!DateTime.TryParse(formData["endDate"], out DateTime endDate))
+        //    {
+        //        // Return an error view
+        //    }
+        //    if (!double.TryParse(formData["startPrice"], NumberStyles.Float, CultureInfo.InvariantCulture, out double startPrice))
+        //    {
+        //        // Return an error view
+        //    }
+
+        //    IdentityUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+
+        //    Auction auction = new Auction
+        //    {
+        //        Name = name,
+        //        Description = description,
+        //        StartingPrice = (int)startPrice,
+        //        CreatedDate = DateTime.Now,  
+        //        EndDate = endDate,
+        //        UserId = currentUser.Email,
+        //    };
+
+        //    _auctionService.CreateAuction(auction);    
+        //    return View();
+        //}
 
         // POST: AuctionsController/Edit/id
         [HttpPost]

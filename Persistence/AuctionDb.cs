@@ -48,7 +48,7 @@ namespace DistLab2.Persistence
         public string UserId { get; set; }
         public virtual UserDb User { get; set; }
        
-        //public byte[] Image { get; set; }
+        public byte[] Image { get; set; }
 
     }
 }
