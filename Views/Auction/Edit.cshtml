@@ -1,16 +1,17 @@
 @model int;
+@inject DistLab2.Core.Interfaces.IAuctionService auctionService
 @{
     ViewData["Title"] = "Edit auction";
 }
 
 <section class="h-full pt-8">
     <div class="w-[500px] rounded-3xl bg-white m-auto p-8">
-        <h1 class="mb-8 text-center text-3xl font-bold">Create Auction</h1>
+        <h1 class="mb-8 text-center text-3xl font-bold">Edit Description</h1>
         <form asp-controller="Auction" asp-action="Edit" asp-route-id="@Model" method="post">
             <div class="flex flex-col gap-4">
                 <textarea name="description" rows="5" placeholder="Description"
                     class="w-full resize-none rounded-xl bg-cus-bg p-3 px-4 placeholder:font-light focus:outline-black"
-                    type="text"></textarea>
+                    type="text">@auctionService.GetById(Model).Description</textarea>
                 <button type="submit" class="mt-2 w-full rounded-xl bg-black/90 p-3 text-white">Submit</button>
             </div>
 

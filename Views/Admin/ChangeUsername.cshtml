@@ -1,0 +1,25 @@
+@model DistLab2.ViewModels.RegisterVM;
+@{
+    ViewData["Title"] = "Edit auction";
+}
+
+<section class="h-full pt-8">
+    <div class="m-auto w-[500px] rounded-3xl bg-white p-8">
+        <h1 class="mb-8 text-center text-3xl font-bold">Edit User</h1>
+        <div class="flex flex-col gap-3">
+            <p class="text-black/50"><strong class="text-black">Email: </strong>@Model.Email</p>
+            <p class="text-black/50"><strong class="text-black">Role: </strong>@Model.Role</p>
+        </div>
+        <br>
+        <br>
+        <form asp-controller="Admin" asp-action="ChangeUsername" method="post">
+            <input type="hidden" name="email" value="@Model.Email"/>
+            <div class="flex flex-col gap-4">
+                <input value="@Model.Username" name="username" rows="5" placeholder="Description"
+                    class="bg-cus-bg w-full resize-none rounded-xl p-3 px-4 placeholder:font-light focus:outline-black"
+                    type="text" />
+                <button type="submit" class="mt-2 w-full rounded-xl bg-black/90 p-3 text-white">Update</button>
+            </div>
+        </form>
+    </div>
+</section>

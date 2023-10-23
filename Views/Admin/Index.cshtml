@@ -1,0 +1,80 @@
+@using DistLab2.ViewModels
+@model IEnumerable<RegisterVM>
+
+<div class="py-4">
+    <div class="flex justify-between">
+        <h1 class="text-2xl font-bold">Members</h1>
+        <form method="get" asp-action="AddUser" asp-asp-controller="Admin">
+            <button type="submit" class="rounded-lg bg-black text-white px-8 py-2">Add</button>
+        </form>
+    </div>
+    <br />
+
+    <div class="bg-white p-8 rounded-3xl ">
+        <table class="min-w-full  divide-y ">
+            <thead class=" text-black ">
+                <tr>
+                    <th class="w-1/5 whitespace-nowrap px-2 py-2 text-start">Username</th>
+                    <th class="w-1/5 whitespace-nowrap  px-2 py-2 text-start">Email</th>
+                    <th class="w-1/5 whitespace-nowrap  px-2 py-2 text-start">Role</th>
+                    <th class="w-1/5 whitespace-nowrap px-2 py-2 text-start">Status</th>
+                    <th class="w-1/5 whitespace-nowrap px-2 py-2 text-start">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 ">
+                @foreach (RegisterVM item in Model)
+                {
+
+                    <tr>
+                        <td class=" w-1/5 whitespace-nowrap px-2 py-3">@item.Username</td>
+                        <td class="w-1/5 whitespace-nowrap px-2 py-2">@item.Email</td>
+                        <td class="w-1/5 whitespace-nowrap px-2 py-2">@item.Role</td>
+                        <td class="w-1/5 whitespace-nowrap py-2">
+                            <p class="inline-block bg-green-100 text-green-400 rounded-2xl px-3 py-1 text-xs">Active</p>
+                        </td>
+                        <td class="w-1/5 whitespace-nowrap px-2 py-2 flex gap-4">
+                            <form asp-action="MyAuctions" asp-controller="Auction" method="get">
+                                <input type="hidden" name="email" value="@item.Email">
+                                <button type="submit" class="rounded bg-slate-50 px-2 py-1 text-black/80">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M20 3H4C3.46957 3 2.96086 3.21071 2.58579 3.58579C2.21071 3.96086 2 4.46957 2 5V19C2 19.5304 2.21071 20.0391 2.58579 20.4142C2.96086 20.7893 3.46957 21 4 21H20C20.5304 21 21.0391 20.7893 21.4142 20.4142C21.7893 20.0391 22 19.5304 22 19V5C22 4.46957 21.7893 3.96086 21.4142 3.58579C21.0391 3.21071 20.5304 3 20 3ZM11 17H5V15H11V17ZM19 13H5V11H19V13ZM19 9H5V7H19V9Z"
+                                            fill="#626262" />
+                                    </svg>
+                                </button>
+
+                            </form>
+
+                            <form asp-action="ChangeUsername" asp-controller="Admin" method="get">
+                                <input type="hidden" name="email" value="@item.Email">
+                                <button type="submit" class="rounded bg-slate-50 px-2 py-1 text-black/80">
+                                    <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M3 17.46V20.5C3 20.78 3.22 21 3.5 21H6.54C6.67 21 6.8 20.95 6.89 20.85L17.81 9.94L14.06 6.19L3.15 17.1C3.05 17.2 3 17.32 3 17.46ZM20.71 7.04C20.8027 6.94749 20.8762 6.8376 20.9264 6.71663C20.9766 6.59565 21.0024 6.46597 21.0024 6.335C21.0024 6.20403 20.9766 6.07435 20.9264 5.95338C20.8762 5.83241 20.8027 5.72252 20.71 5.63L18.37 3.29C18.2775 3.1973 18.1676 3.12375 18.0466 3.07357C17.9257 3.02339 17.796 2.99756 17.665 2.99756C17.534 2.99756 17.4043 3.02339 17.2834 3.07357C17.1624 3.12375 17.0525 3.1973 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z"
+                                            fill="#626262" />
+                                    </svg></button>
+                            </form>
+
+
+                            <form method="post" action="/Admin/DeleteUser">
+                                <input type="hidden" value="@item.Email" name="email" />
+                                <button type="submit" class="rounded bg-slate-50 px-2 py-1 text-red-500">
+                                    <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z"
+                                            fill="#626262" />
+                                    </svg>
+                                </button>
+                            </form>
+
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>

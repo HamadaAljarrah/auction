@@ -1,0 +1,33 @@
+@model DistLab2.ViewModels.RegisterVM
+@{
+    ViewData["Title"] = "AddUser";
+}
+
+
+<section class="h-full pt-[140px]">
+    <div class="w-96 rounded-3xl bg-white p-8  m-auto ">
+        <h1 class="mb-8 text-center text-3xl font-bold">AddUser</h1>
+
+        <form method="post" asp-controller="Admin" asp-action="AddUser" class="flex flex-col gap-4">
+
+            <span asp-validation-for="Username" class="text-red-500"></span>
+            <input asp-for="Username" name="Username" placeholder="Username"
+                class="w-full rounded-xl bg-cus-bg  p-3 px-4 placeholder:font-light focus:outline-black" type="text" /> 
+
+
+            <span asp-validation-for="Email" class="text-red-500"></span>
+            <input asp-for="Email" name="Email" placeholder="Email"
+                class="w-full rounded-xl bg-cus-bg  p-3 px-4 placeholder:font-light focus:outline-black" type="text" />
+
+
+            <span asp-validation-for="Password" class="text-red-500"></span>
+            <input name="Password" placeholder="Password"
+                class="w-full rounded-xl bg-cus-bg  p-3 px-4 placeholder:font-ligh focus:outline-blackt"
+                type="password" />
+
+
+            <button type="submit" class="mt-2 w-full rounded-xl bg-black/90 p-3 text-white">Register</button>
+        </form>
+
+    </div>
+</section>

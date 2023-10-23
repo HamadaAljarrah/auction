@@ -11,6 +11,7 @@ namespace DistLab2.Persistence
 
         [Required]
         public string Username { get; set; }
+        public string Role { get; set; }
 
 
         // Virtuel navigation property for lazyloading
@@ -19,4 +20,6 @@ namespace DistLab2.Persistence
 
         public UserDb() { }
     }
+
+
 }
