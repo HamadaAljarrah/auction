@@ -5,9 +5,9 @@
 }
 
 <section class="h-full">
-    <h1 class="my-3 py-3 text-3xl font-bold">Auctions</h1>
+    <h1 class="mt-6 mb-28 py-3 text-3xl font-bold ">Listed Auctions</h1>
     <div class="flex justify-center items-center">
-        <div class="max-w-[1070px] overflow-x-auto no-scrollbar">
+        <div class="max-w-[1250px] overflow-x-auto no-scrollbar">
 
             <div class="flex flex-row gap-4">
                 @foreach (var item in Model)
@@ -15,7 +15,7 @@
        
                     <a href="/auction/details/@item.Id">
 
-                        <div class="relative h-[460px] w-[340px] overflow-clip rounded-3xl cursor-pointer ">
+                        <div class="relative h-[500px] w-[400px] overflow-clip rounded-3xl cursor-pointer ">
                             <div class="absolute inset-0 z-10 h-full w-full bg-gradient-to-b from-black/40 to-black/10"></div>
                             <img class="inset-0 object-cover absolute h-full w-full"
                                  src="data:image/jpeg;base64,@Convert.ToBase64String(item.Image)"
