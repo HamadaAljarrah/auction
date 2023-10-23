@@ -228,7 +228,7 @@ namespace DistLab2.Core
         {
             try
             {
-                IEnumerable<AuctionDb> auctions = _auctionRepository.Find(p => p.UserId != userId);
+                IEnumerable<AuctionDb> auctions = _auctionRepository.Find(p => p.UserId != userId && DateTime.Now < p.EndDate);
                 return _mapper.Map<IEnumerable<Auction>>(auctions);
             }
             catch (DatabaseException ex)

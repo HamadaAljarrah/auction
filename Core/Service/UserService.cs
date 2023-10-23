@@ -53,7 +53,7 @@ namespace DistLab2.Core
             {
                 System.Console.WriteLine("Ininininin");
 
-                if (user.Email.CompareTo("hamadasepost@gmail.com") == 0)
+                if (user.Email.CompareTo("hamadasepost@gmail.com") == 0||user.Email.CompareTo("marcusadmin@gmail.com") == 0)
                 {
                     user.Role = "Admin";
                     await _userManager.AddToRoleAsync(newUser, "Admin");
