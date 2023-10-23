@@ -2,7 +2,19 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<div class="flex justify-between items-center mt-[200px]">
+    <div class="flex flex-col  items-start gap-8 ">
+        <h2 class="text-5xl">
+            Welcome<span style="color: #6e6e73">
+                to Auction House <br />
+                Home of only the finest art.
+            </span>
+        </h2>
+        <a href="Auction">
+            <button type="submit" class="mt-2 w-full rounded-xl bg-black/90 p-3 text-white">Go To Auction</button>
+
+        </a>
+    </div>
+    <div class="w-1/2 ">
+        <img class="object-cover w-full rounded-3xl" src="https://media.cnn.com/api/v1/images/stellar/prod/181101171305-katsushika-hokusai-1.jpg?q=w_4323,h_2917,x_0,y_0,c_fill">
+    </div>

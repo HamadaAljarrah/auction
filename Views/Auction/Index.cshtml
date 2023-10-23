@@ -5,65 +5,29 @@
 }
 
 <section class="h-full">
-
     <h1 class="my-3 py-3 text-3xl font-bold">Auctions</h1>
-    <div class="flex flex-row gap-4">
-        @foreach (var item in Model)
-        {
+    <div class="flex justify-center items-center">
+        <div class="max-w-[1070px] overflow-x-auto no-scrollbar">
+
+            <div class="flex flex-row gap-4">
+                @foreach (var item in Model)
+                {
        
-            <a href="/auction/details/@item.Id">
-                <div class="relative h-[460px] w-[340px] overflow-clip rounded-3xl cursor-pointer">
-                    <div class="absolute inset-0 z-10 h-full w-full bg-gradient-to-b from-black/40 to-black/10"></div>
-                    <img class="inset-0 object-cover absolute h-full w-full"
-                         src="data:image/jpeg;base64,@Convert.ToBase64String(item.Image)"
-                        alt="" />
+                    <a href="/auction/details/@item.Id">
 
-                    <p class="absolute top-7 left-6 text-white z-20 text-2xl font-bold">@item.Name</p>
-                </div>
-            </a>
+                        <div class="relative h-[460px] w-[340px] overflow-clip rounded-3xl cursor-pointer ">
+                            <div class="absolute inset-0 z-10 h-full w-full bg-gradient-to-b from-black/40 to-black/10"></div>
+                            <img class="inset-0 object-cover absolute h-full w-full"
+                                 src="data:image/jpeg;base64,@Convert.ToBase64String(item.Image)"
+                                alt="" />
+
+                            <p class="absolute top-4 left-6 text-white z-20 text font-bold">@item.Name</p>
+                        </div>
+                    </a>
    
-            @* <div class="m-auto max-h-[260-px] rounded-3xl bg-white p-6">
-                <div class="flex items-center justify-between gap-5">
-                    <img src="https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcQ-FvbbAq5IaJUhtwxXEwY0D-jiZju02ejnNHx_bQWL_27GF3srhwJgqusMAqKh3QqU"
-                        alt="" class="aspect-square h-52 w-52 rounded-2xl object-cover object-top" />
-
-                    <div class="flex flex-col justify-between place-self-stretch">
-                        <div>
-                            <div class="flex items-end gap-2">
-                                <h1 class="text-3xl font-bold">@item.Name</h1>
-                                <span class="rounded-xl bg-green-200 px-3 py-1 text-[12px]">@item.Bids.Count</span>
-                            </div>
-                        </div>
-                        <div class="overflow-y-auto max-h-[140px]">
-                            <p class="leading-[150%]">@item.Description</p>
-                        </div>
-
-                    </div>
-
-                    <div class="flex flex-col gap-10 border-l-[0.5px] pl-4">
-                        <svg class="cursor-pointer" width="32" height="32" viewBox="0 0 32 32" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M16 8.286C8.454 8.286 2.5 16 2.5 16C2.5 16 8.454 23.715 16 23.715C21.77 23.715 29.5 16 29.5 16C29.5 16 21.77 8.286 16 8.286ZM16 20.806C13.35 20.806 11.193 18.65 11.193 16C11.193 13.35 13.35 11.193 16 11.193C18.65 11.193 20.807 13.35 20.807 16C20.807 18.65 18.65 20.806 16 20.806ZM16 13.194C15.6271 13.187 15.2566 13.2543 14.91 13.3921C14.5635 13.53 14.2479 13.7355 13.9817 13.9967C13.7155 14.2579 13.5041 14.5696 13.3597 14.9135C13.2154 15.2573 13.141 15.6266 13.141 15.9995C13.141 16.3724 13.2154 16.7417 13.3597 17.0855C13.5041 17.4294 13.7155 17.7411 13.9817 18.0023C14.2479 18.2635 14.5635 18.469 14.91 18.6068C15.2566 18.7447 15.6271 18.812 16 18.805C16.7349 18.7911 17.435 18.4894 17.9498 17.9648C18.4646 17.4402 18.753 16.7345 18.753 15.9995C18.753 15.2645 18.4646 14.5588 17.9498 14.0342C17.435 13.5096 16.7349 13.2079 16 13.194Z"
-                                fill="#626262" />
-                        </svg>
-
-                        <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M3 17.46V20.5C3 20.78 3.22 21 3.5 21H6.54C6.67 21 6.8 20.95 6.89 20.85L17.81 9.94L14.06 6.19L3.15 17.1C3.05 17.2 3 17.32 3 17.46ZM20.71 7.04C20.8027 6.94749 20.8762 6.8376 20.9264 6.71663C20.9766 6.59565 21.0024 6.46597 21.0024 6.335C21.0024 6.20403 20.9766 6.07435 20.9264 5.95338C20.8762 5.83241 20.8027 5.72252 20.71 5.63L18.37 3.29C18.2775 3.1973 18.1676 3.12375 18.0466 3.07357C17.9257 3.02339 17.796 2.99756 17.665 2.99756C17.534 2.99756 17.4043 3.02339 17.2834 3.07357C17.1624 3.12375 17.0525 3.1973 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z"
-                                fill="#626262" />
-                        </svg>
-
-                        <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z"
-                                fill="#626262" />
-                        </svg>
-                    </div>
-                </div>
-            </div> *@
-        }
+    
+                }
+            </div>
+        </div>
     </div>
 </section>
