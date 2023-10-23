@@ -4,7 +4,11 @@ namespace DistLab2.Core.Interfaces
 {
     public interface IUserService
     {
-        void CreateUser(User user);
-        User GetUsername(string email);
+        void RegisterUser(User user);
+        User GetCurrnetUser();
+        Task<bool> LoginUser(User user);
+        void LogoutUser();
+
+        bool IsAuthenticated();
     }
 }

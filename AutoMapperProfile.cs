@@ -19,6 +19,7 @@ namespace DistLab2
 
 
             CreateMap<RegisterVM, User>().ReverseMap();
+            CreateMap<LoginVM, User>().ReverseMap();
             CreateMap<User, UserDb>().ReverseMap();
 
         }

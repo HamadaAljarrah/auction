@@ -31,15 +31,16 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IRepository<BidDb>, Repository<BidDb>>();
 builder.Services.AddScoped<IRepository<UserDb>, Repository<UserDb>>();
 builder.Services.AddScoped<IRepository<AuctionDb>, Repository<AuctionDb>>();
+builder.Services.AddScoped<IRepository<BidDb>, Repository<BidDb>>();
 
 builder.Services.AddScoped<IAuctionService, AuctionService>();
 builder.Services.AddScoped<IUserService, UserService>();//todo testa om den ska va h�r
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddScoped<UserManager<IdentityUser>>();
+
 builder.Services.AddScoped<AuthFilter>();
 
 var app = builder.Build();
