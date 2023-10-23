@@ -49,21 +49,17 @@ namespace DistLab2.Controllers
         public IActionResult Register(RegisterVM model)
         {
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _userService.RegisterUser(_mapper.Map<User>(model));
-                    return RedirectToAction("Index", "Home");
-                }
-                catch (ServiceException ex)
-                {
-                    Console.WriteLine(ex.StackTrace);
-                    return View("Error", ex.Message);
-                }
+                _userService.RegisterUser(_mapper.Map<User>(model), true);
+                return RedirectToAction("Index", "Home");
+            }
+            catch (ServiceException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return View("Error", ex.Message);
             }
 
-            return View();
         }
 
         [HttpPost]

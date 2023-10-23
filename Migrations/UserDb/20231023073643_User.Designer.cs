@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DistLab2.Migrations.UserDb
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20231022100426_User")]
+    [Migration("20231023073643_User")]
     partial class User
     {
         /// <inheritdoc />

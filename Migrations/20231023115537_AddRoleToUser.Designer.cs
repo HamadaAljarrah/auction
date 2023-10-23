@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DistLab2.Migrations
 {
     [DbContext(typeof(AuctionDbContext))]
-    [Migration("20231022100417_App")]
-    partial class App
+    [Migration("20231023115537_AddRoleToUser")]
+    partial class AddRoleToUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,6 +90,10 @@ namespace DistLab2.Migrations
             modelBuilder.Entity("DistLab2.Persistence.UserDb", b =>
                 {
                     b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")

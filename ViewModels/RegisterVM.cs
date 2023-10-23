@@ -20,5 +20,9 @@ namespace DistLab2.ViewModels
         [Required]
         [Display(Name = "Username")]
         public string Username { get; set; }
+
+        public string Role { get; set; }
+
+
     }
 }

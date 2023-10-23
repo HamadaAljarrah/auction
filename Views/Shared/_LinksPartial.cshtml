@@ -1,15 +1,31 @@
 @using Microsoft.AspNetCore.Identity
-@inject UserManager<IdentityUser> UserManager
-@inject SignInManager<IdentityUser> SignInManager
+@using DistLab2.Core.Interfaces
+@inject IUserService userService
+@{
+    bool isAdmin = await userService.IsAdmin();
+    bool isAuthenticated = userService.IsAuthenticated();
+    var user = userService.GetCurrnetUser();
 
-@if (SignInManager.IsSignedIn(User))
+
+}
+@if (isAuthenticated && !isAdmin)
 {
     <div class="flex gap-4">
     <a asp-controller="Auction" asp-action="Index">Auctions</a>
-    <a asp-controller="Auction" asp-action="MyAuctions">My Auctions</a>
+    <form asp-controller="Auction" asp-action="MyAuctions">
+        <input type="hidden" name="email" value="@user.Email">
+        <a>My Auctions</a>
+
+    </form>
     <a asp-controller="Auction" asp-action="AuctionUserBidIn">Attended auctions</a>
     <a asp-controller="Auction" asp-action="AuctionUserWon">Winning auctions</a>
 
 </div>
 }
 
+@if (isAuthenticated && isAdmin)
+{
+    <div class="flex gap-4">
+    <a asp-controller="Admin" asp-action="Index">Dashboard</a>
+</div>
+}

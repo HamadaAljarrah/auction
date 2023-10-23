@@ -25,8 +25,11 @@ builder.Services.AddDbContext<AuctionDbContext>(options => options.UseSqlite("Da
 builder.Services.AddDbContext<UserDbContext>(options => options.UseSqlite("Data Source=users.db"));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+        .AddRoles<IdentityRole>()
         .AddEntityFrameworkStores<UserDbContext>()
         .AddDefaultTokenProviders();
+
+
 
 
 // Add services to the container.
@@ -51,6 +54,11 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    RoleInitializer.InitializeAsync(scope.ServiceProvider).Wait();  // Be cautious using Wait() as it can lead to deadlocks
 }
 
 app.UseHttpsRedirection();

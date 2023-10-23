@@ -6,22 +6,24 @@ using DistLab2.Core.Interfaces;
 using DistLab2.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace DistLab2.Controllers
 {
-     [ServiceFilter(typeof(AuthFilter))]
+    [ServiceFilter(typeof(AuthFilter))]
     public class AuctionController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly UserManager<IdentityUser> _userManager;
         private readonly IAuctionService _auctionService;
+        private readonly IUserService _userService;
 
-        public AuctionController(IAuctionService auctionService, IMapper mapper, UserManager<IdentityUser> userManager)
+
+        public AuctionController(IUserService userService, IAuctionService auctionService, IMapper mapper, UserManager<IdentityUser> userManager)
         {
             _auctionService = auctionService;
             _mapper = mapper;
-            _userManager = userManager;
+            _userService = userService;
         }
 
         // GET: AuctionsController
@@ -44,11 +46,11 @@ namespace DistLab2.Controllers
 
 
         // GET: AuctionsController/Auction/MyAuctions
-        public IActionResult MyAuctions()
+        public IActionResult MyAuctions(string email)
         {
             try
             {
-                var myacutions = _auctionService.GetUserAuctions(User.Identity.Name);
+                var myacutions = _auctionService.GetUserAuctions(email);
                 var viewAuction = _mapper.Map<IEnumerable<AuctionVM>>(myacutions);
                 return View(viewAuction);
             }
@@ -98,7 +100,6 @@ namespace DistLab2.Controllers
         {
 
 
-            IdentityUser currentUser = await _userManager.GetUserAsync(HttpContext.User);//todo g�r s� p� auction service f�r user
             AuctionVM auction = new AuctionVM()
             {
                 Name = name,
@@ -106,7 +107,7 @@ namespace DistLab2.Controllers
                 StartingPrice = startPrice,
                 CreatedDate = DateTime.Now,
                 EndDate = endDate,
-                UserId = currentUser.Email,
+                UserId = _userService.GetCurrnetUser().Email,
             };
 
             if (image != null && image.Length > 0)
@@ -123,9 +124,16 @@ namespace DistLab2.Controllers
 
         // POST: AuctionsController/Edit/id
         [HttpPost]
-        public ActionResult Edit(string description, int id)
+        public async Task<ActionResult> Edit(string description, int id)
         {
 
+            bool isOwn = _auctionService.GetById(id).UserId.CompareTo(_userService.GetCurrnetUser().Email) != 0;
+            bool isAdmin = await _userService.IsAdmin();
+
+            if (!isAdmin || !isOwn)
+            {
+                return Forbid();
+            }
             try
             {
                 _auctionService.UpdateDescription(description, id);
@@ -141,9 +149,16 @@ namespace DistLab2.Controllers
 
         // POST: AuctionsController/Delete/id
         [HttpPost]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-             try
+            bool isOwn = _auctionService.GetById(id).UserId.CompareTo(_userService.GetCurrnetUser().Email) == 0;
+            bool isAdmin = await _userService.IsAdmin();
+
+            if (!isAdmin && !isOwn)
+            {
+                return Forbid();
+            }
+            try
             {
                 _auctionService.DeleteAuction(id);
                 return RedirectToAction("MyAuctions");
@@ -163,7 +178,7 @@ namespace DistLab2.Controllers
             Console.WriteLine(Amount);
             Console.WriteLine("_____");
 
-         
+
             // Get the auction by its ID
             var auction = _auctionService.GetById(Id);
 
@@ -181,23 +196,7 @@ namespace DistLab2.Controllers
         }
 
 
-        // GET: AuctionsController/Auction/MyAuctions
-        public IActionResult UserAuctions()
-        {
-
-            try
-            {
-                var myacutions = _auctionService.GetUserAuctions(User.Identity.Name);
-                var viewAuction = _mapper.Map<IEnumerable<AuctionVM>>(myacutions);
-                return View(viewAuction);
-            }
-            catch (ServiceException ex)
-            {
-                Console.WriteLine(ex.StackTrace);
-                return View("Error", ex.Message);
-            }
-
-        }
+      
         // GET: AuctionsController/Auction/MyAuctions
         public IActionResult AuctionUserWon()
         {
