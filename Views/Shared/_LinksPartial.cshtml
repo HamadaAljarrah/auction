@@ -12,10 +12,9 @@
 {
     <div class="flex gap-4">
     <a asp-controller="Auction" asp-action="Index">Auctions</a>
-    <form asp-controller="Auction" asp-action="MyAuctions">
+    <form asp-controller="Auction" asp-action="MyAuctions" method="get">
         <input type="hidden" name="email" value="@user.Email">
-        <a>My Auctions</a>
-
+        <button type="submit">My Auctions</button>
     </form>
     <a asp-controller="Auction" asp-action="AuctionUserBidIn">Attended auctions</a>
     <a asp-controller="Auction" asp-action="AuctionUserWon">Winning auctions</a>

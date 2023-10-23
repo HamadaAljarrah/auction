@@ -98,8 +98,7 @@ namespace DistLab2.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(string name, string description, DateTime endDate, int startPrice, IFormFile image)
         {
-
-
+            string email = _userService.GetCurrnetUser().Email;
             AuctionVM auction = new AuctionVM()
             {
                 Name = name,
@@ -107,7 +106,7 @@ namespace DistLab2.Controllers
                 StartingPrice = startPrice,
                 CreatedDate = DateTime.Now,
                 EndDate = endDate,
-                UserId = _userService.GetCurrnetUser().Email,
+                UserId = email,
             };
 
             if (image != null && image.Length > 0)
@@ -118,7 +117,7 @@ namespace DistLab2.Controllers
                 auction.Image = stream.ToArray();
             }
             _auctionService.CreateAuction(_mapper.Map<Auction>(auction));
-            return RedirectToAction("MyAuctions");
+            return RedirectToAction("MyAuctions", new { email });
         }
 
 
@@ -126,8 +125,8 @@ namespace DistLab2.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(string description, int id)
         {
-
-            bool isOwn = _auctionService.GetById(id).UserId.CompareTo(_userService.GetCurrnetUser().Email) != 0;
+             string email = _userService.GetCurrnetUser().Email;
+            bool isOwn = _auctionService.GetById(id).UserId.CompareTo(email) != 0;
             bool isAdmin = await _userService.IsAdmin();
 
             if (!isAdmin || !isOwn)
@@ -137,7 +136,7 @@ namespace DistLab2.Controllers
             try
             {
                 _auctionService.UpdateDescription(description, id);
-                return RedirectToAction("MyAuctions");
+                return RedirectToAction("MyAuctions", new{email});
             }
             catch (ServiceException ex)
             {
@@ -151,7 +150,8 @@ namespace DistLab2.Controllers
         [HttpPost]
         public async Task<ActionResult> Delete(int id)
         {
-            bool isOwn = _auctionService.GetById(id).UserId.CompareTo(_userService.GetCurrnetUser().Email) == 0;
+            string email = _userService.GetCurrnetUser().Email;
+            bool isOwn = _auctionService.GetById(id).UserId.CompareTo(email) == 0;
             bool isAdmin = await _userService.IsAdmin();
 
             if (!isAdmin && !isOwn)
@@ -161,7 +161,7 @@ namespace DistLab2.Controllers
             try
             {
                 _auctionService.DeleteAuction(id);
-                return RedirectToAction("MyAuctions");
+                return RedirectToAction("MyAuctions", new { email });
 
             }
             catch (ServiceException ex)
