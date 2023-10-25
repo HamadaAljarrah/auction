@@ -8,3 +8,4 @@ Hamada Aljarrah aljarrah@kth.se
 ![Screenshot 4](Screenshots/myAuctions.png)
 ![Screenshot 5](Screenshots/create.png)
 ![Screenshot 6](Screenshots/dashborad.png)
+![Screenshot 7](Screenshots/Diagram.png)

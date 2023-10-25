@@ -150,17 +150,6 @@ namespace DistLab2.Core
                 _bidRepository.Insert(newBid);
                 auction.Bids.Add(newBid);
                 user.Bids.Add(newBid);
-
-                // mappa istället
-                // BidDb newBid = new BidDb //todo läg dynamic id 
-                // {
-                //     Amount = bidAmount,
-                //     AuctionId = auctionId,
-                //     UserId = "Marcus.Okodugha247@gmail.com",
-                //     CreatedTime = DateTime.Now
-                // };
-                // // Save the changes to the database
-                // _bidReposetory.Update(newBid);
             }
             catch (DatabaseException ex)
             {
