@@ -2,6 +2,8 @@
 Marcus Okodugha marcusok@kth.se
 Hamada Aljarrah aljarrah@kth.se
 
+Demo video: https://www.youtube.com/watch?v=sDAsCNQboWk&feature=youtu.be&ab_channel=MarcusOkodugha
+
 ![Screenshot 1](Screenshots/home.png)
 ![Screenshot 2](Screenshots/auctions.png)
 ![Screenshot 3](Screenshots/Details.png)
